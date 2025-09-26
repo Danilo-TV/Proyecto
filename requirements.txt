@@ -1,0 +1,7 @@
+django==5.2.6
+djangorestframework
+tweepy
+python-social-auth
+Pillow
+facebook-business
+facebook-requests
