@@ -4,4 +4,3 @@ tweepy
 python-social-auth
 Pillow
 facebook-business
-facebook-requests
