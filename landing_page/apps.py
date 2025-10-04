@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class BlockConfig(AppConfig):
+class LandingPageConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'block'
+    name = 'landing_page'

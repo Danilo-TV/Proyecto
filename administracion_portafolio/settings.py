@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dashboard',
+    'portafolio',
+    'blog',
+    'e_commerce',
+    'landing_page',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
