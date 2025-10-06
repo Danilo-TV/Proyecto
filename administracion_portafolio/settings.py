@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'e_commerce',
     'landing_page',
     'rest_framework',
+    'tweepy',
+    'python-socual-auth',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,23 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'e_commerce.Usuario'
+
+REST_FRAMEWORK = {
+    # 1. Definición de permisos por defecto
+    # Esto asegura que la API tiene un control de acceso por defecto.
+    'DEFAULT_PERMISSION_CLASSES': [
+        # Usa los permisos estándar de Django, 
+        # PERO permite acceso de solo lectura (GET/HEAD/OPTIONS) a usuarios no autenticados (Anon) [5].
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    
+    # 2. Definición de Autenticación por defecto (Opcional, pero esencial para que los permisos funcionen)
+    # Si su proyecto usa tokens o sesiones, debe definirlos aquí:
+     'DEFAULT_AUTHENTICATION_CLASSES': [
+         'rest_framework.authentication.SessionAuthentication', 
+         'rest_framework.authentication.TokenAuthentication', # Si usa tokens
+     ]
+    
+    # 3. Serializador de Hypermedia (Opcional: solo si usó HyperlinkedModelSerializer)
+    # 'DEFAULT_MODEL_SERIALIZER_CLASS': 'rest_framework.serializers.HyperlinkedModelSerializer',
+}
