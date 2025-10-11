@@ -4,3 +4,8 @@ tweepy
 python-social-auth
 Pillow
 facebook-business
+django-cors-headers
+djangorestframework-simplejwt
+OAuth2
+django-ratelimit
+pymemcache

@@ -1,70 +1,44 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.utils import timezone
+from django.contrib.auth import get_user_model
 
-class UsuarioManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('El email es obligatorio')
-        email = self.normalize_email(email)
-        usuario = self.model(email=email, **extra_fields)
-        usuario.set_password(password) # set_password aplica hashing
-        usuario.save(using=self._db)
-        return usuario
-    
-    def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_admin', True)
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(email, password, **extra_fields)
-    
-class Usuario(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
-    nombre = models.CharField(max_length=255)
-    is_admin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    fecha_registro = models.DateTimeField(default=timezone.now)
+class VentaCurso(models.Model):
+	"""
+	Modelo para registrar la venta de cursos a usuarios registrados.
+	"""
+	curso_fk = models.ForeignKey('Curso', on_delete=models.CASCADE)
+	usuario_fk = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+	monto_pagado = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+	fecha_compra = models.DateField()
 
-    objects = UsuarioManager()
+	def __str__(self):
+		return f"Venta de {self.curso_fk.nombre} a {self.usuario_fk.username} por {self.monto_pagado}"
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nombre']
+class Curso(models.Model):
+	"""
+	Modelo para cursos especializados ofrecidos en la plataforma.
+	"""
+	nombre = models.CharField(max_length=255, null=False)
+	descripcion_corta = models.TextField()
+	precio = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+	url_video = models.URLField(max_length=500)
+	fecha_creacion = models.DateField()
 
-    def __str__(self):
-        return self.email
+	def __str__(self):
+		return self.nombre
 
-class SocialTokens(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    plataforma = models.CharField(max_length=50) # Ej: 'Twitter', 'Facebook'
-    token_acceso = models.TextField()
-    fecha_expiracion = models.DateTimeField(null=True, blank=True)
-    
-    class Meta:
-        unique_together = ('usuario', 'plataforma')
+from django.db import models
+from django.contrib.auth import get_user_model
 
-class Servicios(models.Model):
-    nombre = models.CharField(max_length=100, unique=True)
-    descripcion = models.TextField()
-    es_curso = models.BooleanField(default=False) # True si es curso, False si es servicio
-    
-    def __str__(self):
-        return self.nombre
+class Cita(models.Model):
+	"""
+	Modelo para gestionar citas agendadas por usuarios registrados.
+	"""
+	usuario_fk = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+	fecha_agendamiento = models.DateField(null=False)
+	hora_agendamiento = models.TimeField(null=False)
+	servicio_solicitado = models.CharField(max_length=100)
+	estado_cita = models.CharField(max_length=50)
 
-class Servicios(models.Model):
-    nombre = models.CharField(max_length=100, unique=True)
-    descripcion = models.TextField()
-    es_curso = models.BooleanField(default=False) # True si es curso, False si es servicio
-    
-    def __str__(self):
-        return self.nombre
-
-class InscripcionesCurso(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    curso = models.ForeignKey(Servicios, on_delete=models.CASCADE, limit_choices_to={'es_curso': True}) 
-    fecha_inscripcion = models.DateTimeField(default=timezone.now)
-    precio_pagado = models.DecimalField(max_digits=10, decimal_places=2)
-    estado_pago = models.CharField(max_length=50)
-    
-    def __str__(self):
-        return f"Inscripción de {self.usuario.email} al curso {self.curso.nombre}"                        
+	def __str__(self):
+		return f"Cita de {self.usuario_fk.username} para {self.servicio_solicitado} el {self.fecha_agendamiento} a las {self.hora_agendamiento}"
+                     
