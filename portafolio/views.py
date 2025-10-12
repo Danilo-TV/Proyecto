@@ -22,6 +22,3 @@ class ContactoPortafolioViewSet(viewsets.ModelViewSet):
 	queryset = ContactoPortafolio.objects.all()
 	serializer_class = ContactoPortafolioSerializer
 	permission_classes = [ContactoPortafolioPermission]
-
-
-# Create your views here.

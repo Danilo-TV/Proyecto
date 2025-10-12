@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class LandingPageConfig(AppConfig):
+class AuthConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'landing_page'
+    name = 'users'
