@@ -1,0 +1,196 @@
+/* ===================================================================
+   CSS para la Página de Detalle de Proyecto (project-detail.css)
+=================================================================== */
+
+/* Contenedor principal del proyecto */
+.project-container {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    max-width: 1100px; /* Ancho máximo para el contenido */
+}
+
+.project-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.project-header .project-title {
+    font-size: 2.8rem;
+    color: var(--headline-color);
+    margin-bottom: 0.5rem;
+}
+
+.project-header .project-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-color-light);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Galería de imágenes */
+.project-gallery {
+    margin-bottom: 3rem;
+}
+
+.gallery-main-image {
+    width: 100%;
+    height: 500px; /* Altura fija para la imagen principal */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio */
+    border-radius: var(--border-radius-large);
+    margin-bottom: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-thumbnails img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.gallery-thumbnails img:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.gallery-thumbnails img.active {
+    opacity: 1;
+    border-color: var(--primary-color);
+}
+
+/* Contenido del proyecto (dos columnas) */
+.project-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Columna principal más ancha */
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+/* Descripción detallada del proyecto */
+.project-description h3 {
+    font-size: 1.8rem;
+    color: var(--headline-color);
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.project-description h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.project-description p {
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+/* Barra lateral con información y CTA de compra */
+.project-sidebar {
+    background-color: var(--background-light);
+    padding: 2rem;
+    border-radius: var(--border-radius-large);
+    position: sticky;
+    top: 100px; /* Para que se quede fija al hacer scroll */
+}
+
+.info-block {
+    margin-bottom: 2rem;
+}
+
+.info-block h4 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--headline-color);
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-tags .tag {
+    background-color: var(--primary-color-light);
+    color: var(--primary-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Bloque de E-commerce */
+.ecommerce-block {
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--headline-color);
+    margin-bottom: 0.25rem;
+}
+
+.price-note {
+    font-size: 0.9rem;
+    color: var(--text-color-light);
+    margin-bottom: 1.5rem;
+}
+
+/* Botón de compra reutilizando el estilo de cta-button */
+.buy-button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background-color: var(--success-color); /* Un color verde para la acción de comprar */
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius-medium);
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buy-button:hover {
+    background-color: #218838; /* Un verde más oscuro al pasar el ratón */
+    transform: translateY(-2px);
+}
+
+
+/* Adaptación para dispositivos móviles */
+@media (max-width: 768px) {
+    .project-content-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+    }
+
+    .project-header .project-title {
+        font-size: 2.2rem;
+    }
+
+    .gallery-main-image {
+        height: 300px; /* Menor altura en móviles */
+    }
+
+    .project-sidebar {
+        position: static; /* La barra lateral ya no es pegajosa */
+        margin-top: 2rem;
+    }
+}

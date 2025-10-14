@@ -1,0 +1,167 @@
+/* ===================================================================
+   CSS para la Página de Checkout (checkout.css)
+=================================================================== */
+
+.checkout-section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Columna de formulario más ancha */
+    gap: 3rem;
+}
+
+/* Formulario de Pago */
+.checkout-form h2 {
+    font-size: 1.8rem;
+    color: var(--headline-color);
+    margin-bottom: 2rem;
+}
+
+#payment-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+#payment-form label {
+    display: block;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+#payment-form input {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    font-size: 1rem;
+    background-color: var(--background-light);
+    color: var(--text-color);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#payment-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-color-light);
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.pay-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    background-color: var(--success-color); /* Verde para indicar pago */
+}
+
+.pay-button:hover {
+    background-color: #218838; /* Verde más oscuro */
+}
+
+/* Resumen del Pedido */
+.order-summary {
+    background-color: var(--background-light);
+    padding: 2rem;
+    border-radius: var(--border-radius-large);
+    height: fit-content; /* Para que no se estire innecesariamente */
+    position: sticky;
+    top: 100px;
+}
+
+.order-summary h2 {
+    font-size: 1.8rem;
+    color: var(--headline-color);
+    margin-top: 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.summary-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--border-radius-small);
+    margin-right: 1rem;
+}
+
+.summary-item-info h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--headline-color);
+}
+
+.summary-item-info p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.summary-total {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+}
+
+.summary-total .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--headline-color);
+}
+
+.total-row span:first-child {
+    font-weight: normal;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+/* Mensaje de confirmación */
+.confirmation-message {
+    display: none; /* Oculto por defecto */
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--success-color-light);
+    border: 1px solid var(--success-color);
+    border-radius: var(--border-radius-medium);
+    color: var(--success-color-dark);
+}
+
+.confirmation-message i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .checkout-grid {
+        grid-template-columns: 1fr; /* Apila las columnas */
+    }
+    .order-summary {
+        position: static; /* Ya no es pegajoso */
+        margin-top: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-row {
+        flex-direction: column;
+        gap: 1.5rem; /* Mantiene el espaciado en columna */
+    }
+}

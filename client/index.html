@@ -22,62 +22,9 @@
         <div class="spinner"></div>
     </div>
 
-    <!-- ==================== HEADER / HERO SECTION (CON MENÚ DE USUARIO) ==================== -->
+    <!-- ==================== HEADER (DINÁMICO) ==================== -->
     <header class="hero-section" id="hero">
-        <nav class="main-nav">
-            <div class="logo">MiLogo</div>
-            <ul class="nav-links">
-                <li><a href="#hero">Inicio</a></li>
-                <li><a href="#about">Sobre mí</a></li>
-                <li><a href="#portfolio">Portafolio</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#contact">Contacto</a></li>
-            </ul>
-            
-            <!-- ==================== USER MENU AREA ==================== -->
-            <div class="nav-extra">
-                <div class="user-menu-area">
-                    
-                    <!-- MENU PARA USUARIOS NO LOGUEADOS -->
-                    <div id="logged-out-menu" style="display: none;">
-                        <a href="login.html" class="user-menu-btn">Login</a>
-                        <a href="register.html" class="user-menu-btn register">Registrarse</a>
-                    </div>
-
-                    <!-- MENU PARA USUARIOS LOGUEADOS -->
-                    <div id="logged-in-menu" style="display: none;">
-                        <button id="user-menu-toggle" class="user-menu-toggle">
-                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="User" class="user-image">
-                            <span class="username-display">Usuario</span>
-                        </button>
-
-                        <div id="user-dropdown" class="user-dropdown">
-                            <div class="user-header">
-                                <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="User" class="user-image-large">
-                                <p id="username-dropdown-display">Nombre de Usuario</p>
-                                <small>Web Developer</small>
-                            </div>
-                            <div class="user-body">
-                                <a href="#" class="dropdown-item">
-                                    <i class="fas fa-user"></i><span>Mi Perfil</span>
-                                </a>
-                                <div class="dropdown-item theme-switcher-item">
-                                    <i class="fas fa-palette"></i>
-                                    <span>Tema</span>
-                                    <label class="theme-switch">
-                                        <input type="checkbox" id="theme-toggle">
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="user-footer">
-                                <button id="logout-button" class="btn-logout">Cerrar Sesión</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div id="nav-placeholder"></div>
         <div class="hero-content" data-aos="fade-up">
             <h1 class="headline">Desarrollador de Soluciones Digitales a Medida</h1>
             <p class="subheadline">Transformo ideas en aplicaciones web robustas, escalables y visualmente atractivas.</p>
@@ -85,9 +32,8 @@
         </div>
     </header>
 
-    <!-- ==================== MAIN CONTENT (VERSIÓN RESTAURADA) ==================== -->
+    <!-- ==================== MAIN CONTENT ==================== -->
     <main>
-        <!-- ==================== ABOUT ME ==================== -->
         <section id="about" class="about-section">
             <div class="about-content" data-aos="fade-right">
                 <h2>Sobre Mí</h2>
@@ -99,34 +45,27 @@
             </div>
         </section>
 
-        <!-- ==================== PORTFOLIO ==================== -->
         <section id="portfolio" class="portfolio-section">
             <h2 data-aos="fade-up">Proyectos Destacados</h2>
-            <div id="portfolio-gallery" class="portfolio-grid" data-aos="fade-up">
-                <!-- Los ítems del portafolio se cargarán aquí desde la API -->
+            <div id="portfolio-gallery" class="portfolio-grid" data-aos="fade-up"></div>
+            <div class="text-center" data-aos="fade-up" style="margin-top: 2rem;">
+                <a href="portfolio.html" class="cta-button">Ver todos los proyectos</a>
             </div>
         </section>
 
-        <!-- ==================== BLOG ==================== -->
-        <section id="blog" class="blog-section">
-            <h2 data-aos="fade-up">Últimas Publicaciones del Blog</h2>
-            <div id="blog-posts" class="blog-grid" data-aos="fade-up">
-                <!-- Las publicaciones del blog se cargarán aquí desde la API -->
-            </div>
+        <section id="blog-preview" class="blog-section">
+            <h2 data-aos="fade-up">Últimas Entradas del Blog</h2>
+            <div id="blog-posts-preview" class="blog-grid" data-aos="fade-up"></div>
             <div class="text-center" data-aos="fade-up" style="margin-top: 2rem;">
-                <a href="#" class="cta-button">Ver todos los artículos</a>
+                <a href="blog.html" class="cta-button">Ir al Blog</a>
             </div>
         </section>
-        
-        <!-- ==================== TESTIMONIALS ==================== -->
+
         <section id="testimonials" class="testimonials-section">
             <h2 data-aos="fade-up">Lo que dicen mis clientes</h2>
-            <div class="testimonial-slider" data-aos="fade-up">
-                <!-- Testimonios se insertan aquí -->
-            </div>
+            <div class="testimonial-slider" data-aos="fade-up"></div>
         </section>
 
-        <!-- ==================== CONTACT ==================== -->
         <section id="contact" class="contact-section">
             <h2 data-aos="fade-up">Hablemos</h2>
             <p data-aos="fade-up" style="text-align: center; margin-bottom: 3rem;">¿Tienes un proyecto en mente? Me encantaría escucharte.</p>
@@ -140,30 +79,11 @@
         </section>
     </main>
 
-    <!-- ==================== FOOTER (VERSIÓN RESTAURADA) ==================== -->
-    <footer class="footer-section">
-       <div class="container">
-            <div class="footer-links">
-                <a href="#hero">Inicio</a>
-                <a href="#about">Sobre mí</a>
-                <a href="#portfolio">Portafolio</a>
-                <a href="#blog">Blog</a>
-            </div>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>                
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-            <p>&copy; 2025 Mi Portafolio Profesional. Todos los derechos reservados.</p>
-       </div>
-    </footer>
-
-    <a href="https://wa.me/TUNUMERODETELEFONO" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <!-- ==================== FOOTER (DINÁMICO) ==================== -->
+    <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-      AOS.init({ duration: 1000, once: true });
-    </script>
     <script src="js/app.js"></script>
 </body>
 </html>

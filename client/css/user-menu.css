@@ -3,13 +3,19 @@
     position: relative;
 }
 
+/* Contenedor para los controles cuando el usuario no está logueado */
+.logged-out-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre los botones y el switcher */
+}
+
 #logged-out-menu .user-menu-btn {
     color: var(--text-color);
     text-decoration: none;
     padding: 8px 16px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
-    margin-left: 10px;
 }
 
 #logged-out-menu .user-menu-btn.register {
@@ -21,6 +27,21 @@
     background-color: var(--primary-color-dark);
 }
 
+/* Estilos para el interruptor de tema fuera del menú de usuario */
+.theme-switcher-item-standalone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+}
+
+.theme-switcher-item-standalone .fas {
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+/* ==================== MENÚ DE USUARIO LOGUEADO ==================== */
 #logged-in-menu .user-menu-toggle {
     background: none;
     border: none;
@@ -53,7 +74,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 250px;
     z-index: 1000;
-    display: none; /* Hidden by default */
+    display: none; /* Oculto por defecto */
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.2s ease, transform 0.2s ease;
@@ -127,7 +148,7 @@
     background-color: #d32f2f;
 }
 
-/* Theme switcher inside dropdown */
+/* ==================== INTERRUPTOR DE TEMA (GENÉRICO) ==================== */
 .theme-switcher-item span {
     flex-grow: 1;
 }

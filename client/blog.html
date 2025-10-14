@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Mi Portafolio Profesional</title>
+    <meta name="description" content="Artículos sobre desarrollo web, tecnología y programación.">
+    
+    <!-- Librerías Externas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Estilos Propios -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/user-menu.css">
+    <link rel="stylesheet" href="css/blog.css">
+
+</head>
+<body>
+
+    <!-- ==================== PRELOADER ==================== -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ==================== HEADER (DINÁMICO) ==================== -->
+    <header class="hero-section hero-short" id="hero">
+        <div id="nav-placeholder"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1 class="headline">Nuestro Blog</h1>
+            <p class="subheadline">Explora nuestros últimos artículos sobre tecnología y desarrollo.</p>
+        </div>
+    </header>
+
+    <!-- ==================== BLOG POSTS SECTION ==================== -->
+    <main>
+        <section id="blog-list" class="blog-section">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Todas las Publicaciones</h2>
+                <div class="blog-grid" id="blog-posts-container" data-aos="fade-up" data-aos-delay="200">
+                    <p>Cargando artículos...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== FOOTER (DINÁMICO) ==================== -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+/* Estilos para la sección del blog y las tarjetas de publicación */
+
+.blog-section .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.blog-card {
+    background-color: var(--bg-color-light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color-dark);
+    margin: 0 0 0.75rem 0;
+}
+
+.blog-card-content .post-meta {
+    font-size: 0.8rem;
+    color: var(--text-color-light);
+    margin-bottom: 1rem;
+}
+
+.blog-card-content .post-meta .author-date {
+    margin-right: 1rem;
+}
+
+.blog-card-content .post-excerpt {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-color-main);
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.blog-card-content .read-more-btn {
+    display: inline-block;
+    align-self: flex-start; /* Alinea el botón al inicio */
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.blog-card-content .read-more-btn:hover {
+    color: var(--primary-color-dark);
+    text-decoration: underline;
+}
+
+/* Adaptación para el tema oscuro */
+[data-theme='dark'] .blog-card {
+    background-color: var(--bg-color-dark-soft);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .blog-card:hover {
+     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .blog-card-content h3 {
+    color: var(--text-color-dark-theme);
+}
+
+[data-theme='dark'] .blog-card-content .post-meta {
+    color: var(--text-color-light-theme);
+}
+
+[data-theme='dark'] .blog-card-content .post-excerpt {
+    color: var(--text-color-main-theme);
+}
