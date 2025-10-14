@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'tweepy',
     'corsheaders',
     'redes_sociales',
+    'django_ratelimit',
 ]
 
 MIDDLEWARE = [
@@ -156,9 +157,4 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-]
-
-# Rate limiting
-INSTALLED_APPS += [
-    'django_ratelimit',
 ]
