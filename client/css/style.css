@@ -1,0 +1,143 @@
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --background-color: #f4f4f9;
+    --text-color: #333;
+    --card-bg-color: #ffffff;
+    --header-bg-color: rgba(255, 255, 255, 0.8);
+    --footer-bg-color: #2c3e50;
+    --white: #fff;
+}
+
+[data-theme="dark"] {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --card-bg-color: #1e1e1e;
+    --header-bg-color: rgba(30, 30, 30, 0.8);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ==================== PRELOADER ==================== */
+#preloader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--background-color); display: flex; justify-content: center; align-items: center;
+    z-index: 9999; transition: opacity 0.5s ease;
+}
+.spinner { 
+    border: 8px solid #f3f3f3; border-top: 8px solid var(--primary-color);
+    border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* ==================== GENERAL STYLES ==================== */
+a { text-decoration: none; color: var(--primary-color); }
+img { max-width: 100%; height: auto; }
+section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+h2 { font-size: 2.5rem; margin-bottom: 2rem; text-align: center; font-weight: 600; }
+.cta-button { 
+    background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--white); padding: 1rem 2.5rem; border-radius: 50px;
+    font-weight: 600; text-transform: uppercase; transition: transform 0.3s, box-shadow 0.3s;
+}
+.cta-button:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+/* ==================== HEADER / HERO ==================== */
+.hero-section { 
+    min-height: 100vh; 
+    background-image: linear-gradient(45deg, rgba(106, 17, 203, 0.8), rgba(37, 117, 252, 0.8)), url('https://picsum.photos/1920/1080');
+    background-size: cover; background-position: center; color: var(--white);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 0 1rem;
+}
+.main-nav { 
+    position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 2rem; background-color: var(--header-bg-color); backdrop-filter: blur(10px); 
+    z-index: 1000; transition: background-color 0.3s;
+}
+.logo { font-weight: 700; font-size: 1.5rem; }
+.nav-links { list-style: none; display: flex; }
+.nav-links li a { color: var(--text-color); margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
+.nav-links li a:hover { color: var(--primary-color); }
+.hero-content .headline { font-size: 4rem; font-weight: 700; margin-bottom: 1rem; }
+.hero-content .subheadline { font-size: 1.5rem; margin-bottom: 2rem; max-width: 600px; }
+.theme-switcher { font-size: 1.2rem; cursor: pointer; color: var(--text-color); }
+
+/* ==================== ABOUT ==================== */
+.about-section { display: flex; align-items: center; gap: 4rem; }
+.about-content { flex: 1; }
+.about-image { flex: 1; text-align: center; }
+.about-image img { border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+
+/* ==================== PORTFOLIO & BLOG ==================== */
+.portfolio-grid, .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+.portfolio-item, .blog-post { 
+    background-color: var(--card-bg-color); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s;
+}
+.portfolio-item:hover, .blog-post:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+.portfolio-item img, .blog-post img { width: 100%; height: 200px; object-fit: cover; }
+.item-content, .post-content { padding: 1.5rem; }
+
+/* ==================== SERVICES ==================== */
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; }
+.service-card { 
+    background-color: var(--card-bg-color); padding: 2rem; border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+.service-icon { font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem; }
+
+/* ==================== TESTIMONIALS ==================== */
+.testimonials-section { background-color: var(--card-bg-color); }
+.testimonial-slider { max-width: 800px; margin: 0 auto; position: relative; overflow: hidden; min-height: 250px; }
+.testimonial { 
+    position: absolute; top: 0; left: 0; width: 100%; padding: 2rem; text-align: center; 
+    opacity: 0; transition: opacity 0.5s ease-in-out;
+}
+.testimonial.active { opacity: 1; position: relative; }
+.testimonial p { font-size: 1.25rem; font-style: italic; margin-bottom: 1.5rem; }
+.testimonial-author { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.testimonial-author img { width: 60px; height: 60px; border-radius: 50%; }
+
+/* ==================== CONTACT ==================== */
+.contact-section form { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+.contact-section input, .contact-section textarea { 
+    width: 100%; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; 
+    background-color: var(--card-bg-color); color: var(--text-color);
+}
+
+/* ==================== FOOTER ==================== */
+.footer-section { 
+    background-color: var(--footer-bg-color); color: var(--white); 
+    text-align: center; padding: 3rem 1rem;
+}
+.footer-links { margin-bottom: 1rem; }
+.footer-links a { color: var(--white); margin: 0 1rem; }
+.social-icons a { color: var(--white); font-size: 1.5rem; margin: 0 0.5rem; }
+
+/* ==================== WHATSAPP FLOAT ==================== */
+.whatsapp-float { 
+    position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white;
+    width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 100;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    h2 { font-size: 2rem; }
+    .hero-content .headline { font-size: 2.5rem; }
+    .nav-links { display: none; /* Simplificando para este ejemplo, se puede hacer un menú hamburguesa */ }
+    .about-section { flex-direction: column; }
+}
