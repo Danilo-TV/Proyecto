@@ -4,9 +4,10 @@
 
 /* Contenedor principal del proyecto */
 .project-container {
-    padding-top: 4rem;
+    padding-top: 10rem;
     padding-bottom: 4rem;
     max-width: 1100px; /* Ancho máximo para el contenido */
+    margin: 0 auto; /* Ancho máximo para el contenido */
 }
 
 .project-header {
