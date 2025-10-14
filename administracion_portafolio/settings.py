@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'tweepy',
     'corsheaders',
     'redes_sociales',
+    'django_ratelimit',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware', # Añadido para permitir peticiones del frontend
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -155,9 +157,4 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-]
-
-# Rate limiting
-INSTALLED_APPS += [
-    'django_ratelimit',
 ]
