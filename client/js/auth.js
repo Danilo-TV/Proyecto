@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_URL = 'http://localhost:8000/api/users'; // URL base para la autenticación
+    const API_URL = 'http://localhost:8000/auth/'; // URL base para la autenticación
 
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = Object.fromEntries(formData.entries());
 
             try {
-                const response = await fetch(`${API_URL}/register/`, {
+                const response = await fetch(`${API_URL}register/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = Object.fromEntries(formData.entries());
 
             try {
-                const response = await fetch(`${API_URL}/login/`, {
+                const response = await fetch(`${API_URL}login/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
