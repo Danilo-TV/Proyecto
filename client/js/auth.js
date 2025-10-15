@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // CORREGIDO: La URL base correcta es /auth/ según la configuración de Django.
+    // La URL base correcta es /auth/ según la configuración de Django.
     const API_URL = 'http://localhost:8000/auth/';
 
     const loginForm = document.getElementById('login-form');
