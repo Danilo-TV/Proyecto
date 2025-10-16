@@ -1,0 +1,12 @@
+REALIZADOS!!
+Aplicaciones de usuarios, portafolio y blog realizadas.
+Frontend de la landing page realizada, login realizado.
+Conexion del Frontend con el Backend realizado.
+Normas del uso de la IA realizado.
+
+
+PENDIENTES!!
+El dashboard
+El ecommers
+Las redes sociales
+Administración principal
