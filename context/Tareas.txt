@@ -3,6 +3,7 @@ Aplicaciones de usuarios, portafolio y blog realizadas.
 Frontend de la landing page realizada, login realizado.
 Conexion del Frontend con el Backend realizado.
 Normas del uso de la IA realizado.
+Frontend y Backend de blog realizado.
 
 
 PENDIENTES!!
@@ -10,3 +11,5 @@ El dashboard
 El ecommers
 Las redes sociales
 Administración principal
+Pruebas de seguridad en todas las apps
+Pruebas de funcionalidad en todas las apps
