@@ -1,70 +1,170 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Replicamos los datos de ejemplo. En una app real, esto vendría de una API o un módulo compartido.
-    const samplePosts = [
-        {
-            id: 1,
-            title: "Introducción a la Programación Asíncrona en JavaScript",
-            author: "Danilo T.",
-            date: "15 de Julio, 2024",
-            excerpt: "Descubre los conceptos clave de la asincronía en JS, desde callbacks hasta Async/Await, y mejora el rendimiento de tus aplicaciones.",
-            imageUrl: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=2070&auto=format&fit=crop",
-            content: `
-                <p>La programación asíncrona es un pilar fundamental en JavaScript que permite realizar operaciones de larga duración sin bloquear el hilo principal de ejecución. Esto es crucial para mantener una interfaz de usuario fluida y receptiva.</p>
-                <blockquote>En este artículo, exploraremos las diferentes técnicas que JavaScript nos ofrece para manejar la asincronía, comenzando por los clásicos callbacks y terminando con la sintaxis moderna de Async/Await.</blockquote>
-                <h2>Callbacks: La Forma Original</h2>
-                <p>Un callback es simplemente una función que se pasa como argumento a otra función, con la expectativa de que la función contenedora la llame (call back) en un momento adecuado. Aunque efectivos, los callbacks pueden llevar a un código anidado y difícil de leer, conocido como 'Callback Hell'.</p>
-                <h2>Promesas: Un Mejor Enfoque</h2>
-                <p>Las promesas (Promises) llegaron para resolver el problema del Callback Hell. Una promesa es un objeto que representa la eventual finalización (o falla) de una operación asíncrona. Permiten encadenar operaciones de una manera mucho más limpia y legible usando <code>.then()</code> para los éxitos y <code>.catch()</code> para los errores.</p>
-                <h2>Async/Await: Azúcar Sintáctico</h2>
-                <p>La adición de <code>async</code> y <code>await</code> en ES2017 revolucionó la forma en que escribimos código asíncrono. Nos permite escribir código que parece síncrono pero que se ejecuta de manera no bloqueante. Es, en esencia, una forma más elegante de trabajar con promesas, haciendo el código aún más intuitivo.</p>
-            `
-        },
-        // ... (los otros posts también tendrían una propiedad 'content')
-    ];
 
+    // URL Base de la API de Django. ¡Asegúrate de que el puerto sea el correcto!
+    const API_BASE_URL = 'http://127.0.0.1:8000';
+
+    // Elementos del DOM
     const postContainer = document.getElementById('post-container');
-    const pageTitle = document.querySelector('title');
+    const commentsList = document.getElementById('comments-list');
+    const commentsLoading = document.getElementById('comments-loading');
+    const commentFormContainer = document.getElementById('comment-form-container');
+    const commentForm = document.getElementById('comment-form');
+    const commentLoginPrompt = document.getElementById('comment-login-prompt');
 
-    function getPostIdFromUrl() {
+    // Obtener el ID del post desde la URL
+    const getPostId = () => {
         const params = new URLSearchParams(window.location.search);
-        return parseInt(params.get('id'));
+        return params.get('id');
+    };
+
+    const postId = getPostId();
+
+    if (!postId) {
+        postContainer.innerHTML = '<p>Error: No se ha especificado un ID de post.</p>';
+        commentsLoading.style.display = 'none';
+        return;
     }
 
-    function findPostById(id) {
-        // Nota: En una app real, haríamos una petición a la API como /api/posts/${id}
-        return samplePosts.find(post => post.id === id);
-    }
+    /**
+     * Formatea una fecha en formato YYYY-MM-DD a un formato más legible.
+     */
+    const formatDate = (dateString) => {
+        if (!dateString) return 'Fecha no disponible';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    };
 
-    function renderPost() {
-        const postId = getPostIdFromUrl();
-        const post = findPostById(postId);
+    /**
+     * Renderiza el contenido principal del post.
+     */
+    const renderPost = (post) => {
+        document.title = `${post.titulo} - Mi Portafolio`;
+        postContainer.innerHTML = `
+            <h1 class="post-title" data-aos="fade-up">${post.titulo}</h1>
+            <div class="post-meta" data-aos="fade-up" data-aos-delay="100">
+                <span>Por ${post.autor_username || 'Anónimo'}</span> | 
+                <span>${formatDate(post.fecha_publicacion)}</span>
+            </div>
+            <img src="${post.imagen_principal}" alt="Imagen del post" class="post-image" data-aos="fade-up" data-aos-delay="200">
+            <div class="post-content" data-aos="fade-up" data-aos-delay="300">
+                ${post.contenido} 
+            </div>
+        `;
+    };
 
-        if (!postContainer) return;
+    /**
+     * Renderiza un único comentario en la lista.
+     */
+    const renderComment = (comment) => {
+        const li = document.createElement('li');
+        li.className = 'comment-item';
+        li.innerHTML = `
+            <div class="comment-author">${comment.usuario_fk_username || 'Usuario'}</div>
+            <div class="comment-body">${comment.cuerpo_comentario}</div>
+            <div class="comment-date">${formatDate(comment.fecha_comentario)}</div>
+        `;
+        commentsList.appendChild(li);
+    };
 
-        if (post) {
-            // Actualizamos el título de la página
-            pageTitle.textContent = `${post.title} - Mi Portafolio`;
+    /**
+     * Carga el post y los comentarios desde la API.
+     */
+    const loadPostAndComments = async () => {
+        try {
+            const [postResponse, commentsResponse] = await Promise.all([
+                fetch(`${API_BASE_URL}/blog/posts_blog/${postId}/`),
+                fetch(`${API_BASE_URL}/blog/comentarios/?post_fk=${postId}`)
+            ]);
 
-            // Creamos el HTML para el post
-            const postHtml = `
-                <header class="post-header" data-aos="fade-up">
-                    <h1>${post.title}</h1>
-                    <div class="post-meta">
-                        <span><i class="fas fa-user"></i> Por ${post.author}</span>
-                        <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
-                    </div>
-                </header>
-                <img src="${post.imageUrl}" alt="${post.title}" class="post-featured-image" data-aos="fade-up" data-aos-delay="100">
-                <div class="post-content" data-aos="fade-up" data-aos-delay="200">
-                    ${post.content || '<p>' + post.excerpt + '</p>'} 
-                </div>
-            `;
-            postContainer.innerHTML = postHtml;
-        } else {
-            postContainer.innerHTML = '<p>Artículo no encontrado. Por favor, <a href="blog.html">vuelve al blog</a>.</p>';
-            pageTitle.textContent = "Artículo no encontrado";
+            if (!postResponse.ok) throw new Error('No se pudo cargar el artículo.');
+            const post = await postResponse.json();
+            renderPost(post);
+
+            if (!commentsResponse.ok) throw new Error('No se pudieron cargar los comentarios.');
+            const comments = await commentsResponse.json();
+            
+            commentsLoading.style.display = 'none';
+            if (comments.length > 0) {
+                commentsList.innerHTML = ''; // Limpiar la lista antes de añadir nuevos comentarios
+                comments.forEach(renderComment);
+            } else {
+                commentsList.innerHTML = '<p>Todavía no hay comentarios. ¡Sé el primero!</p>';
+            }
+
+        } catch (error) {
+            console.error("Error al cargar los datos:", error);
+            postContainer.innerHTML = `<p>Error al cargar el contenido: ${error.message}</p>`;
+            commentsLoading.textContent = 'No se pudieron cargar los comentarios.';
+        } finally {
+            if (typeof AOS !== 'undefined') {
+                AOS.init({ duration: 800, once: true });
+            }
         }
-    }
+    };
 
-    renderPost();
+    /**
+     * Configura el formulario de comentarios basándose en el estado de login.
+     */
+    const setupCommentForm = () => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            commentLoginPrompt.style.display = 'none';
+            commentForm.style.display = 'block';
+        } else {
+            commentLoginPrompt.style.display = 'block';
+            commentForm.style.display = 'none';
+        }
+    };
+
+    /**
+     * Maneja el envío del formulario de comentarios.
+     */
+    commentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const commentBodyInput = document.getElementById('comment-body');
+        const commentText = commentBodyInput.value.trim();
+        const token = localStorage.getItem('authToken');
+
+        if (!commentText) {
+            alert('Por favor, escribe un comentario.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/blog/comentarios/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    post_fk: postId,
+                    cuerpo_comentario: commentText
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || 'Error al enviar el comentario.');
+            }
+
+            const newComment = await response.json();
+            newComment.usuario_fk_username = localStorage.getItem('username'); 
+
+            if (commentsList.querySelector('p')) {
+                commentsList.innerHTML = '';
+            }
+
+            renderComment(newComment);
+            commentBodyInput.value = '';
+
+        } catch (error) {
+            console.error('Error al enviar comentario:', error);
+            alert(`Error: ${error.message}`);
+        }
+    });
+
+    // --- INICIALIZACIÓN ---
+    loadPostAndComments();
+    setupCommentForm();
 });
