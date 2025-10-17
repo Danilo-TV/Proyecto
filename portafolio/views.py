@@ -1,24 +1,26 @@
-
 from rest_framework import viewsets, permissions
-from rest_framework.permissions import BasePermission, SAFE_METHODS
 from .models import ItemPortafolio, ContactoPortafolio
 from .serializers import ItemPortafolioSerializer, ContactoPortafolioSerializer
+from .permissions import IsAdminOrReadOnly, IsPostOrAdminOnly # <--- Importar las nuevas clases
 
 class ItemPortafolioViewSet(viewsets.ModelViewSet):
-	queryset = ItemPortafolio.objects.all()
-	serializer_class = ItemPortafolioSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-class ContactoPortafolioPermission(BasePermission):
-	"""
-	Permite POST a cualquier usuario, pero restringe GET/PUT/PATCH/DELETE a usuarios autenticados.
-	"""
-	def has_permission(self, request, view):
-		if request.method == 'POST':
-			return True
-		return request.user and request.user.is_authenticated
+    """
+    GESTIÓN DE ÍTEMS DE PORTAFOLIO
+    Lectura: Anónima (Para la Landing Page).
+    Escritura/Modificación/Borrado: Solo Administrador (is_staff).
+    """
+    queryset = ItemPortafolio.objects.all()
+    serializer_class = ItemPortafolioSerializer
+    # Aplicar IsAdminOrReadOnly: Restringe la escritura solo al Admin.
+    permission_classes = [IsAdminOrReadOnly] # <--- CAMBIO CLAVE 1
 
 class ContactoPortafolioViewSet(viewsets.ModelViewSet):
-	queryset = ContactoPortafolio.objects.all()
-	serializer_class = ContactoPortafolioSerializer
-	permission_classes = [ContactoPortafolioPermission]
+    """
+    GESTIÓN DE MENSAJES DE CONTACTO
+    Creación (POST): Anónima.
+    Lectura (GET), Modificación/Borrado: Solo Administrador (is_staff).
+    """
+    queryset = ContactoPortafolio.objects.all()
+    serializer_class = ContactoPortafolioSerializer
+    # Aplicar IsPostOrAdminOnly: Permite POST anónimo, el resto solo para Admin.
+    permission_classes = [IsPostOrAdminOnly] # <--- CAMBIO CLAVE 2

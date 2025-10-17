@@ -17,10 +17,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),  # Incluir las URLs de la app 'blog'
     path('portafolio/', include('portafolio.urls')),  # Incluir las URLs de la app 'portafolio'
     path('auth/', include('users.urls')),  # Incluir las URLs de la app 'auth'
+    path('api-auth/', include('rest_framework.urls')),  # Añadir las URLs de autenticación de DRF
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
