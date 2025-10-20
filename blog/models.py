@@ -26,7 +26,11 @@ class PostBlog(models.Model):
 	contenido = models.TextField()
 	fecha_publicacion = models.DateField()
 	autor_fk = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=False)
-	imagen_principal = models.URLField(max_length=500)
+	imagen_principal = models.ImageField(
+        upload_to='blog/', 
+        blank=True, 
+        null=True
+    )
 
 	def __str__(self):
 		return self.titulo
