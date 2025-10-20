@@ -10,3 +10,4 @@
 - El código debe adherirse a los principios de seguridad por diseño.
 - Evita crear código que de errores de control de acceso roto.
 - No elimines o modifiques código de forma inmediata sin dar contexto, explicacion o justificación para su eliminación
+- No toques la logica del boton de cambio de tema.

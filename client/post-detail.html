@@ -3,47 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Post - Mi Portafolio Profesional</title>
-    
+    <title>Detalle del Post | Mi Portafolio</title>
+    <meta name="description" content="Detalles de un artículo del blog.">
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
     <link rel="stylesheet" href="css/post-detail.css">
-
 </head>
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader"><div class="spinner"></div></div>
 
-    <!-- ==================== PRELOADER ==================== -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
+    <!-- HEADER DINÁMICO -->
+    <header class="hero-section hero-short">
+        <div id="nav-placeholder"></div>
+    </header>
 
-    <!-- ==================== NAV PLACEHOLDER ==================== -->
-    <div id="nav-placeholder"></div>
-
-    <!-- ==================== POST DETAIL SECTION ==================== -->
+    <!-- CONTENIDO DEL POST -->
     <main>
-        <article id="post-container" class="post-container container">
-            <!-- El contenido del post se cargará aquí dinámicamente -->
-            <p>Cargando artículo...</p>
-        </article>
+        <section class="post-detail-section">
+            <div class="container">
+                <!-- El contenido del post se inyectará aquí -->
+                <article id="post-container">
+                    <!-- Mensaje de carga inicial -->
+                    <p>Cargando artículo...</p>
+                </article>
+
+                <!-- SECCIÓN DE COMENTARIOS -->
+                <div id="comments-section" class="comments-section" data-aos="fade-up">
+                    <h2 class="section-title">Comentarios</h2>
+                    
+                    <!-- Lista donde se mostrarán los comentarios -->
+                    <ul id="comments-list" class="comments-list">
+                        <li id="comments-loading">Cargando comentarios...</li>
+                    </ul>
+
+                    <!-- Formulario para añadir un nuevo comentario -->
+                    <div id="comment-form-container" class="comment-form-container">
+                        <!-- Mensaje para iniciar sesión -->
+                        <div id="comment-login-prompt" style="display: none;">
+                            <p>Debes <a href="login.html">iniciar sesión</a> para poder comentar.</p>
+                        </div>
+                        
+                        <!-- Formulario de comentario (visible si el usuario está logueado) -->
+                        <form id="comment-form" style="display: none;">
+                            <textarea id="comment-body" placeholder="Escribe tu comentario aquí..." required></textarea>
+                            <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- ==================== FOOTER PLACEHOLDER ==================== -->
+    <!-- FOOTER DINÁMICO -->
     <div id="footer-placeholder"></div>
-
-    <a href="https://wa.me/TUNUMERODETELEFONO" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
-
+    
     <!-- Scripts -->
-    <!-- AOS debe inicializarse DESPUÉS de cargar el contenido -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <!-- App.js se encarga de cargar nav/footer y luego inicializar otros scripts si es necesario -->
-    <script src="js/app.js"></script>
-    <script src="js/post-detail.js"></script>
-
+    <!-- app.js se encarga del nav/footer general y estado de login -->
+    <script src="js/app.js?v=1.1"></script> 
+    <!-- post-detail.js se encargará de la lógica de esta página específica -->
+    <script src="js/post-detail.js?v=1.1"></script>
+    
 </body>
 </html>
