@@ -3,55 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Portafolio Profesional</title>
-    <meta name="description" content="Artículos sobre desarrollo web y tecnología, publicados desde el API Dashboard de Django.">
+    <title>Blog - LuxeConvert</title>
+    <meta name="description" content="Artículos, tutoriales y consejos sobre el mundo del microblading, la belleza y el cuidado personal.">
+
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Estilos Propios -->
+
+    <!-- Estilos "LuxeConvert" -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
-    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/blog.css"> 
+
 </head>
 <body>
-    <!-- ==================== PRELOADER (Carga de la aplicación) ==================== -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
-    <!-- ==================== HEADER DINÁMICO ==================== -->
-    <header class="hero-section hero-short" id="hero">
-        <!-- El JS inyectará la navegación y el menú de usuario aquí -->
-        <div id="nav-placeholder"></div>
-        <div class="hero-content" data-aos="fade-up">
-            <h1 class="headline">Nuestro Blog</h1>
-            <p class="subheadline">Explora nuestros últimos artículos sobre tecnología y desarrollo.</p>
-        </div>
-    </header>
-    <!-- ==================== SECCIÓN PRINCIPAL DE PUBLICACIONES ==================== -->
+
+    <div id="preloader"><div class="spinner"></div></div>
+    <div id="nav-placeholder"></div>
+
     <main>
-        <section id="blog-list" class="blog-section">
+        <!-- ==================== SECCIÓN DE TÍTULO DE PÁGINA ==================== -->
+        <section class="section section--page-title" data-aos="fade-up">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Todas las Publicaciones</h2>
-                
-                <!-- Contenedor donde se inyectarán las tarjetas de PostBlog -->
+                <h1 class="page-title">Nuestro Blog</h1>
+                <p class="page-subtitle">Consejos de expertas, tendencias y todo lo que necesitas saber para potenciar tu belleza.</p>
+            </div>
+        </section>
+
+        <!-- ==================== CONTENIDO PRINCIPAL DEL BLOG ==================== -->
+        <section id="blog-list" class="section">
+            <div class="container">
+                <!-- Contenedor para las tarjetas de artículos -->
                 <div class="blog-grid" id="blog-posts-container" data-aos="fade-up" data-aos-delay="200">
-                    <p class="loading-message">Cargando artículos...</p>
-                    <!-- Aquí se inyectará el código generado por JS (ej: la función getAllBlogPosts()) -->
+                    <!-- Mensaje de carga inicial -->
+                    <p>Cargando artículos...</p>
                 </div>
 
-                <!-- Botón de CTA (opcional, si hay más páginas de posts) -->
-                <div class="cta-blog" data-aos="fade-up" data-aos-delay="300">
-                    <a href="#" class="btn btn-primary" id="load-more-btn">Cargar Artículos Anteriores</a>
+                <!-- Botón para paginación o carga infinita (funcionalidad futura) -->
+                <div class="section__footer" data-aos="fade-up" data-aos-delay="400">
+                    <button id="load-more-btn" class="btn btn-secondary" style="display: none;">Cargar más</button>
                 </div>
-
             </div>
         </section>
     </main>
-    <!-- ==================== FOOTER DINÁMICO ==================== -->
+
     <div id="footer-placeholder"></div>
-    
+
+    <!-- ==================== MODALS PLACEHOLDER ==================== -->
+    <div id="modals-placeholder"></div>
+
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/auth.js" defer></script>
+
 </body>
 </html>

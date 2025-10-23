@@ -3,87 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Portafolio Profesional</title>
-    <meta name="description" content="Portafolio profesional y blog de desarrollo y tecnología.">
+    <title>LuxeBrows | Artistas de Microblading y Microshading</title>
+    <meta name="description" content="Define tu belleza con cejas perfectas. Expertos en técnicas de microblading y microshading para un look natural y duradero.">
     
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    <!-- Estilos Propios -->
+    <!-- Estilos "LuxeConvert" -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
+    <link rel="stylesheet" href="css/forms.css">
 
 </head>
 <body>
 
     <!-- ==================== PRELOADER ==================== -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
+    <div id="preloader"><div class="spinner"></div></div>
 
-    <!-- ==================== HEADER (DINÁMICO) ==================== -->
-    <header class="hero-section" id="hero">
-        <div id="nav-placeholder"></div>
-        <div class="hero-content" data-aos="fade-up">
-            <h1 class="headline">Desarrollador de Soluciones Digitales a Medida</h1>
-            <p class="subheadline">Transformo ideas en aplicaciones web robustas, escalables y visualmente atractivas.</p>
-            <a href="#contact" class="cta-button">Contáctame</a>
+    <!-- ==================== NAV PLACEHOLDER ==================== -->
+    <div id="nav-placeholder"></div>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <header class="hero" id="hero">
+        <div class="hero__content-wrapper">
+            <div class="hero__content" data-aos="fade-up">
+                <h1 class="hero__headline">Cejas Perfectas, Belleza Sin Esfuerzo</h1>
+                <p class="hero__subheadline">Descubre el arte del microblading y microshading. Diseñamos cejas hiperrealistas que enmarcan tu rostro y realzan tu belleza natural, todos los días.</p>
+                <a href="#contact" class="btn btn-primary btn-lg">Agendar una Consulta</a>
+            </div>
         </div>
     </header>
 
     <!-- ==================== MAIN CONTENT ==================== -->
     <main>
-        <section id="about" class="about-section">
-            <div class="about-content" data-aos="fade-right">
-                <h2>Sobre Mí</h2>
-                <p>Soy un desarrollador apasionado con más de 5 años de experiencia en la creación de soluciones web completas. Mi objetivo es combinar funcionalidad, rendimiento y un diseño excepcional para ofrecer la mejor experiencia de usuario.</p>
-                <a href="#" class="social-button">Mi Instagram <i class="fab fa-instagram"></i></a>
-            </div>
-            <div class="about-image" data-aos="fade-left">
-                <img src="https://picsum.photos/400/400" alt="Retrato profesional" loading="lazy">
+
+        <!-- 1. ABOUT ME SECTION -->
+        <section id="about-me" class="section section--shaded">
+            <div class="container" data-aos="fade-up">
+                <header class="section__header">
+                    <h2 class="section__title">Conoce a la Artista</h2>
+                    <p class="section__subtitle">La mente y el pulso detrás de cada transformación.</p>
+                </header>
+                <div class="about-me-grid">
+                    <div class="about-me-image">
+                        <img src="https://images.unsplash.com/photo-1580894732444-8ec1761a251d?q=80&w=2070&auto=format&fit=crop" alt="Valentina, Artista de Microblading Certificada">
+                    </div>
+                    <div class="about-me-content">
+                        <h3>Valentina Rivas: Pasión por la Simetría y la Belleza Natural</h3>
+                        <p>Mi viaje en el mundo de la belleza comenzó con una simple fascinación: el poder de unas cejas perfectamente diseñadas para enmarcar la mirada y realzar la estructura facial. Para mí, el microblading trasciende la técnica; es una disciplina artística que combina la precisión milimétrica con una profunda comprensión de la estética facial.</p>
+                        <p>Con <strong>más de 5 años de experiencia y cientos de transformaciones exitosas</strong>, mi misión es crear cejas que no solo luzcan impecables, sino que se sientan auténticamente tuyas. Cada clienta es un lienzo único, y mi proceso se centra en escuchar tu visión, analizar tus rasgos y co-crear un diseño que te inspire confianza y te libere de la rutina diaria del maquillaje.</p>
+                        <div class="about-me-credentials">
+                            <span class="credential-item"><i class="fas fa-medal"></i> Artista Certificada</span>
+                            <span class="credential-item"><i class="fas fa-award"></i> Especialista en Simetría Facial</span>
+                            <span class="credential-item"><i class="fas fa-hand-sparkles"></i> Pigmentos de Alta Calidad</span>
+                        </div>
+                        <a href="#contact" class="btn btn-secondary">Diseñemos tus cejas ideales</a>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="portfolio" class="portfolio-section">
-            <h2 data-aos="fade-up">Proyectos Destacados</h2>
-            <div id="portfolio-gallery" class="portfolio-grid" data-aos="fade-up"></div>
-            <div class="text-center" data-aos="fade-up" style="margin-top: 2rem;">
-                <a href="portfolio.html" class="cta-button">Ver todos los proyectos</a>
+        <!-- 2. PORTFOLIO/GALLERY PREVIEW -->
+        <section id="portfolio" class="section">
+            <div class="container" data-aos="fade-up">
+                <header class="section__header">
+                    <h2 class="section__title">Nuestras Transformaciones</h2>
+                    <p class="section__subtitle">Resultados reales que hablan por sí mismos. Explora nuestra galería de antes y después.</p>
+                </header>
+                <div id="portfolio-gallery-container" class="portfolio-grid"></div>
+                <div class="section__footer">
+                    <a href="portfolio.html" class="btn btn-secondary">Ver Galería Completa</a>
+                </div>
             </div>
         </section>
 
-        <section id="blog-preview" class="blog-section">
-            <h2 data-aos="fade-up">Últimas Entradas del Blog</h2>
-            <div id="blog-posts-preview" class="blog-grid" data-aos="fade-up"></div>
-            <div class="text-center" data-aos="fade-up" style="margin-top: 2rem;">
-                <a href="blog.html" class="cta-button">Ir al Blog</a>
+        <!-- 3. TESTIMONIALS SECTION -->
+        <section id="testimonials" class="section section--shaded">
+            <div class="container" data-aos="fade-up">
+                <header class="section__header">
+                    <h2 class="section__title">Clientas Felices</h2>
+                </header>
+                <div class="testimonial-card">
+                    <p class="testimonial-card__quote">"¡No puedo estar más feliz con mis nuevas cejas! El proceso fue súper profesional y el resultado es increíblemente natural. Despertar así todos los días no tiene precio."</p>
+                    <footer class="testimonial-card__footer">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Retrato de clienta satisfecha" class="testimonial-card__avatar">
+                        <div class="testimonial-card__author">
+                            <span class="testimonial-card__name">Sofía García</span>
+                            <span class="testimonial-card__title">Clienta de Microblading</span>
+                        </div>
+                    </footer>
+                </div>
             </div>
         </section>
 
-        <section id="testimonials" class="testimonials-section">
-            <h2 data-aos="fade-up">Lo que dicen mis clientes</h2>
-            <div class="testimonial-slider" data-aos="fade-up"></div>
+        <!-- 4. BLOG PREVIEW -->
+        <section id="blog-preview" class="section">
+            <div class="container" data-aos="fade-up">
+                 <header class="section__header">
+                    <h2 class="section__title">Consejos de Belleza</h2>
+                    <p class="section__subtitle">Cuidados post-tratamiento, tendencias y todo lo que necesitas saber sobre el mundo del microblading.</p>
+                </header>
+                <div id="blog-posts-container" class="blog-grid"></div>
+                <div class="section__footer">
+                    <a href="blog.html" class="btn btn-secondary">Leer Todos los Artículos</a>
+                </div>
+            </div>
         </section>
 
-        <section id="contact" class="contact-section">
-            <h2 data-aos="fade-up">Hablemos</h2>
-            <p data-aos="fade-up" style="text-align: center; margin-bottom: 3rem;">¿Tienes un proyecto en mente? Me encantaría escucharte.</p>
-            <form id="contact-form" data-aos="fade-up">
-                <input type="text" id="nombre" name="nombre" placeholder="Tu Nombre" required>
-                <input type="email" id="email" name="email" placeholder="Tu Correo Electrónico" required>
-                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Tu Mensaje" required></textarea>
-                <button type="submit" class="cta-button">Enviar Mensaje</button>
-            </form>
-             <div id="form-status" style="margin-top: 1rem; text-align: center;"></div>
+        <!-- 5. FAQ SECTION -->
+        <section id="faq" class="section section--shaded">
+            <div class="container" data-aos="fade-up">
+                <header class="section__header">
+                    <h2 class="section__title">Preguntas Frecuentes</h2>
+                    <p class="section__subtitle">Respuestas claras a tus dudas más comunes sobre el microblading.</p>
+                </header>
+                <div class="faq-container" id="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Qué es el microblading y en qué se diferencia del microshading?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>El <strong>Microblading</strong> es una técnica manual en la que se dibujan trazos finos que imitan el pelo natural de la ceja, ideal para un look hiperrealista y definido. Por otro lado, el <strong>Microshading</strong> utiliza una técnica de punteado para crear un efecto de sombreado suave, similar al maquillaje en polvo. A menudo, combinamos ambas técnicas (técnica mixta o "combo brows") para lograr un resultado con más densidad y definición.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿El procedimiento de microblading duele?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>La comodidad de nuestras clientas es primordial. Aplicamos una crema anestésica tópica de alta eficacia al inicio y durante el procedimiento para minimizar cualquier molestia. La mayoría de las clientas describen la sensación como un ligero rasguño o presión, pero no como un dolor intenso.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cuánto tiempo dura el resultado del microblading?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>El resultado del microblading es semi-permanente. Generalmente dura entre 12 y 24 meses, dependiendo de varios factores como tu tipo de piel (las pieles grasas tienden a retener menos el pigmento), tu estilo de vida (exposición al sol, exfoliaciones químicas) y el seguimiento de los cuidados post-tratamiento. Recomendamos un retoque anual para mantener la forma y el color vibrantes.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo es el proceso de curación y qué cuidados debo seguir?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>El proceso de curación completo dura aproximadamente 4 semanas. Durante los primeros 7-10 días, las cejas se verán más oscuras y definidas. Es crucial seguir las indicaciones que te proporcionaremos, que incluyen mantener la zona seca, aplicar una pomada especial y evitar saunas, piscinas y exposición solar directa. Tras la fase inicial de descamación, el color se suavizará hasta alcanzar su tono definitivo.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Soy buena candidata para el microblading?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>El microblading es ideal para la mayoría de las personas que desean mejorar la forma, densidad o definición de sus cejas. Sin embargo, no se recomienda para personas embarazadas o en período de lactancia, personas con diabetes no controlada, que estén tomando anticoagulantes, o que tengan afecciones cutáneas activas (como eczema o acné quístico) en la zona de las cejas. Siempre realizamos una consulta previa para evaluar tu caso particular.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONTACT SECTION -->
+        <section id="contact" class="section">
+            <!-- Formulario de contacto aquí -->
         </section>
     </main>
 
-    <!-- ==================== FOOTER (DINÁMICO) ==================== -->
+    <!-- ==================== FOOTER PLACEHOLDER ==================== -->
     <div id="footer-placeholder"></div>
+
+    <!-- ==================== MODALS PLACEHOLDER ==================== -->
+    <div id="modals-placeholder"></div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/auth.js" defer></script>
+
 </body>
 </html>

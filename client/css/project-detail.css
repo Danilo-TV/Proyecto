@@ -1,197 +1,170 @@
-/* ===================================================================
-   CSS para la Página de Detalle de Proyecto (project-detail.css)
-=================================================================== */
+/* ==================== REFACTORED: PROJECT DETAIL STYLES ("LUXECONVERT") ==================== */
 
-/* Contenedor principal del proyecto */
-.project-container {
-    padding-top: 10rem;
-    padding-bottom: 4rem;
-    max-width: 1100px; /* Ancho máximo para el contenido */
-    margin: 0 auto; /* Ancho máximo para el contenido */
+/* CONTENEDOR PRINCIPAL Y MENSAJE DE CARGA */
+.project-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
 }
 
+.loading-message {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 4rem 0;
+    color: var(--text-color);
+}
+
+/* ENCABEZADO DEL PROYECTO */
 .project-header {
     text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 3rem;
 }
 
-.project-header .project-title {
+[data-theme="dark"] .project-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.project-title {
     font-size: 2.8rem;
-    color: var(--headline-color);
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
 }
 
-.project-header .project-subtitle {
-    font-size: 1.2rem;
-    color: var(--text-color-light);
-    max-width: 700px;
-    margin: 0 auto;
+.project-meta {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.7;
 }
 
-/* Galería de imágenes */
+/* GALERÍA DE IMÁGENES */
 .project-gallery {
     margin-bottom: 3rem;
 }
 
-.gallery-main-image {
-    width: 100%;
-    height: 500px; /* Altura fija para la imagen principal */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio */
-    border-radius: var(--border-radius-large);
-    margin-bottom: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.gallery-thumbnails {
+.image-comparison-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
 }
 
-.gallery-thumbnails img {
+.image-container {
+    background-color: var(--card-bg-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.image-container img {
     width: 100%;
-    height: 80px;
-    object-fit: cover;
-    border-radius: var(--border-radius-small);
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.gallery-thumbnails img:hover {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-.gallery-thumbnails img.active {
-    opacity: 1;
-    border-color: var(--primary-color);
-}
-
-/* Contenido del proyecto (dos columnas) */
-.project-content-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* Columna principal más ancha */
-    gap: 3rem;
-    margin-top: 3rem;
-}
-
-/* Descripción detallada del proyecto */
-.project-description h3 {
-    font-size: 1.8rem;
-    color: var(--headline-color);
-    margin-bottom: 1rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-.project-description h3::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 3px;
-    background-color: var(--primary-color);
-}
-
-.project-description p {
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-}
-
-/* Barra lateral con información y CTA de compra */
-.project-sidebar {
-    background-color: var(--background-light);
-    padding: 2rem;
-    border-radius: var(--border-radius-large);
-    position: sticky;
-    top: 100px; /* Para que se quede fija al hacer scroll */
-}
-
-.info-block {
-    margin-bottom: 2rem;
-}
-
-.info-block h4 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    color: var(--headline-color);
-}
-
-.tech-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.tech-tags .tag {
-    background-color: var(--primary-color-light);
-    color: var(--primary-color);
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-/* Bloque de E-commerce */
-.ecommerce-block {
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-    padding-top: 2rem;
-}
-
-.price {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--headline-color);
-    margin-bottom: 0.25rem;
-}
-
-.price-note {
-    font-size: 0.9rem;
-    color: var(--text-color-light);
-    margin-bottom: 1.5rem;
-}
-
-/* Botón de compra reutilizando el estilo de cta-button */
-.buy-button {
+    height: auto;
     display: block;
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.2rem;
-    background-color: var(--success-color); /* Un color verde para la acción de comprar */
-    color: #fff;
-    border: none;
-    border-radius: var(--border-radius-medium);
+}
+
+.image-label {
     text-align: center;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.buy-button:hover {
-    background-color: #218838; /* Un verde más oscuro al pasar el ratón */
-    transform: translateY(-2px);
+[data-theme="dark"] .image-label {
+    border-top-color: rgba(255, 255, 255, 0.05);
 }
 
+/* CONTENIDO PRINCIPAL Y TARJETA CTA */
+.project-main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+}
 
-/* Adaptación para dispositivos móviles */
-@media (max-width: 768px) {
-    .project-content-grid {
-        grid-template-columns: 1fr; /* Una sola columna en móviles */
+.section-subtitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.project-description-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+.project-cta-card {
+    background-color: var(--card-bg-color);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 120px; /* Offset for the nav bar */
+}
+
+.project-cta-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.project-cta-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.cta-button-container .cta-button {
+    width: 100%;
+    text-align: center;
+}
+
+.trust-elements {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.trust-elements span {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.trust-elements i {
+    margin-right: 0.75rem;
+    color: var(--primary-color);
+    width: 20px;
+    text-align: center;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 992px) {
+    .project-main-content {
+        grid-template-columns: 1fr; /* Stack on smaller screens */
     }
+}
 
-    .project-header .project-title {
+@media (max-width: 768px) {
+    .project-title {
         font-size: 2.2rem;
     }
 
-    .gallery-main-image {
-        height: 300px; /* Menor altura en móviles */
+    .image-comparison-container {
+        grid-template-columns: 1fr; /* Stack images vertically */
     }
 
-    .project-sidebar {
-        position: static; /* La barra lateral ya no es pegajosa */
-        margin-top: 2rem;
+    .project-detail-container {
+        padding: 2rem 1rem;
     }
 }

@@ -1,67 +1,97 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Elementos del DOM
-    const projectContainer = document.getElementById('project-container');
 
-    // Obtener el ID del proyecto desde la URL
-    const getProjectId = () => {
+    const API_BASE_URL = 'http://127.0.0.1:8000/api';
+
+    const projectContainer = document.getElementById('project-container');
+    const template = document.getElementById('project-detail-template');
+
+    // Obtiene el SLUG del proyecto desde la URL, no el ID.
+    const getProjectSlug = () => {
         const params = new URLSearchParams(window.location.search);
-        return params.get('id');
+        return params.get('slug');
     };
 
-    const projectId = getProjectId();
+    // Muestra un mensaje de error estandarizado en el contenedor principal.
+    const displayError = (message) => {
+        if (projectContainer) {
+            projectContainer.innerHTML = `<p class="form-input-soft">${message}</p>`;
+        }
+    };
 
-    if (!projectId) {
-        projectContainer.innerHTML = '<p>Error: No se ha especificado un ID de proyecto.</p>';
-        return;
-    }
+    // Formatea la fecha a un formato legible.
+    const formatDate = (dateString) => {
+        if (!dateString) return 'Fecha no disponible';
+        return new Date(dateString).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+    };
 
     /**
-     * Renderiza el contenido principal del proyecto.
+     * Renderiza los datos del proyecto usando el template y los nuevos campos de la API.
      */
     const renderProject = (project) => {
-        document.title = `${project.titulo} - Mi Portafolio`; // Actualizar el título de la página
-        projectContainer.innerHTML = `
-            <h1 class="project-title" data-aos="fade-up">${project.titulo}</h1>
-            <p class="project-description" data-aos="fade-up" data-aos-delay="100">${project.descripcion}</p>
-            
-            <div class="project-images-container" data-aos="fade-up" data-aos-delay="200">
-                <div class="image-comparison">
-                    <div class="image-wrapper">
-                        <h3>Antes</h3>
-                        <img src="${project.imagen_antes}" alt="Imagen Antes del trabajo en ${project.titulo}">
-                    </div>
-                    <div class="image-wrapper">
-                        <h3>Después</h3>
-                        <img src="${project.imagen_despues}" alt="Imagen Después del trabajo en ${project.titulo}">
-                    </div>
-                </div>
-            </div>
-        `;
+        if (!template) {
+            displayError("Error crítico: La plantilla del proyecto no se encuentra en el DOM.");
+            return;
+        }
+
+        // Actualiza el SEO de la página
+        document.title = `${project.title} - LuxeConvert`;
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            metaDescription.setAttribute('content', project.excerpt || `Detalles de la transformación ${project.title}.`);
+        }
+
+        const clone = template.content.cloneNode(true);
+
+        // Poblar datos usando los nuevos nombres de campo de la API
+        clone.getElementById('project-title').textContent = project.title || 'Título no disponible';
+        clone.getElementById('project-date').textContent = `Realizado en: ${formatDate(project.completed_date)}`;
+        clone.getElementById('project-description').innerHTML = project.description ? project.description.replace(/\n/g, '<br>') : 'Descripción no disponible.';
+        clone.getElementById('project-img-antes').src = project.before_image_url || '';
+        clone.getElementById('project-img-despues').src = project.after_image_url || '';
+
+        if (projectContainer) {
+            projectContainer.innerHTML = ''; // Limpiar mensaje de "cargando..."
+            projectContainer.appendChild(clone);
+
+            // Re-inicializa AOS para que detecte el contenido cargado dinámicamente
+            if (window.AOS) {
+                AOS.refresh();
+            }
+        } 
     };
 
     /**
-     * Carga los datos del proyecto desde la API.
+     * Función principal para obtener y renderizar el proyecto por su slug.
      */
-    const loadProjectDetails = async () => {
+    const main = async () => {
+        const projectSlug = getProjectSlug();
+
+        if (!projectSlug) {
+            displayError('No se ha especificado un proyecto. Por favor, selecciona uno del portafolio.');
+            return;
+        }
+
         try {
-            const response = await fetch(`/portafolio/items_portafolio/${projectId}/`);
+            // Llama al nuevo endpoint de la API con el slug
+            const response = await fetch(`${API_BASE_URL}/portfolio/projects/${projectSlug}/`);
+
             if (!response.ok) {
-                throw new Error('El proyecto no fue encontrado o no se pudo cargar.');
+                if (response.status === 404) {
+                    throw new Error('La transformación que buscas no existe.');
+                } else {
+                    throw new Error(`Error del servidor: ${response.status}`);
+                }
             }
+
             const project = await response.json();
             renderProject(project);
 
         } catch (error) {
-            console.error("Error al cargar los detalles del proyecto:", error);
-            projectContainer.innerHTML = `<p style="text-align: center;">${error.message}</p>`;
-        } finally {
-            // Re-inicializar AOS después de cargar el contenido dinámico
-            if (typeof AOS !== 'undefined') {
-                AOS.init({ duration: 800, once: true });
-            }
+            console.error('Error al obtener los detalles del proyecto:', error);
+            displayError(`No se pudo cargar la transformación. Motivo: ${error.message}`);
         }
     };
 
     // --- INICIALIZACIÓN ---
-    loadProjectDetails();
+    main();
 });

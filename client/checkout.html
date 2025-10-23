@@ -3,81 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finalizar Compra - Mi Portafolio Profesional</title>
-    
+    <title>Finalizar Compra - LuxeConvert</title>
+    <meta name="description" content="Completa tus datos de forma segura para confirmar tu cita y finalizar la compra.">
+
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    <!-- Estilos Propios -->
+    <!-- Estilos "LuxeConvert" -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
+    <link rel="stylesheet" href="css/forms.css">
     <link rel="stylesheet" href="css/checkout.css">
 
 </head>
 <body>
 
-    <!-- ==================== PRELOADER ==================== -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- ==================== NAV PLACEHOLDER ==================== -->
+    <div id="preloader"><div class="spinner"></div></div>
     <div id="nav-placeholder"></div>
 
-    <!-- ==================== CHECKOUT SECTION ==================== -->
     <main>
-        <section class="hero-section hero-short">
-            <div class="hero-content" data-aos="fade-up">
-                <h1 class="headline">Finalizar Compra</h1>
-                <p class="subheadline">Completa tus datos para confirmar la adquisición del servicio.</p>
+        <!-- ==================== SECCIÓN DE TÍTULO DE PÁGINA ==================== -->
+        <section class="section section--page-title" data-aos="fade-up">
+            <div class="container">
+                <h1 class="page-title">Finalizar Compra</h1>
+                <p class="page-subtitle">Estás a un paso de confirmar tu cita. Completa tus datos de forma segura.</p>
             </div>
         </section>
-        <section class="checkout-section container">
-            <div class="checkout-grid">
-                <!-- Columna del formulario de pago -->
-                <div class="checkout-form" data-aos="fade-right">
-                    <h2>Información de Pago</h2>
-                    <form id="payment-form">
-                        <div class="form-group">
-                            <label for="name">Nombre completo</label>
-                            <input type="text" id="name" required placeholder="Tu Nombre Completo">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Correo electrónico</label>
-                            <input type="email" id="email" required placeholder="tu@correo.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="card-number">Número de tarjeta</label>
-                            <input type="text" id="card-number" required placeholder="•••• •••• •••• ••••">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="expiry-date">Fecha de expiración</label>
-                                <input type="text" id="expiry-date" required placeholder="MM/AA">
-                            </div>
-                            <div class="form-group">
-                                <label for="cvc">CVC</label>
-                                <input type="text" id="cvc" required placeholder="•••">
-                            </div>
-                        </div>
-                        <button type="submit" class="cta-button pay-button">Pagar de forma segura</button>
-                    </form>
-                </div>
 
-                <!-- Columna del resumen del pedido -->
-                <div class="order-summary" data-aos="fade-left">
-                    <h2>Resumen del Pedido</h2>
-                    <div id="summary-container">
-                        <!-- El resumen del pedido se cargará aquí -->
-                        <p>Cargando resumen...</p>
+        <!-- ==================== CONTENIDO PRINCIPAL DEL CHECKOUT ==================== -->
+        <section class="section">
+            <div class="container">
+                <div class="checkout-grid">
+
+                    <!-- Columna del formulario de pago -->
+                    <div class="checkout-column" data-aos="fade-right" data-aos-delay="200">
+                        <h2 class="checkout-heading">Información de Pago</h2>
+                        <form id="payment-form" class="checkout-form">
+                            <div class="form-group">
+                                <input type="text" id="name" class="form-input" placeholder="Nombre completo" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" class="form-input" placeholder="Correo electrónico" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="card-number" class="form-input" placeholder="Número de tarjeta (•••• •••• •••• ••••)" required>
+                            </div>
+                            <div class="form-row-split">
+                                <div class="form-group">
+                                    <input type="text" id="expiry-date" class="form-input" placeholder="Expiración (MM/AA)" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="cvc" class="form-input" placeholder="CVC (•••)" required>
+                                </div>
+                            </div>
+                            <div id="form-status" class="error-message" style="display:none;"></div>
+                            <button type="submit" class="btn btn-primary btn-block">Pagar de Forma Segura</button>
+                        </form>
                     </div>
+
+                    <!-- Columna del resumen del pedido -->
+                    <div class="checkout-column" data-aos="fade-left" data-aos-delay="400">
+                        <h2 class="checkout-heading">Resumen del Pedido</h2>
+                        <div id="summary-container" class="order-summary">
+                            <!-- El resumen del pedido se cargará aquí -->
+                            <p>Cargando resumen...</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ==================== FOOTER PLACEHOLDER ==================== -->
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->

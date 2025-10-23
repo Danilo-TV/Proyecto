@@ -1,0 +1,52 @@
+<nav class="main-nav" data-aos="fade-down">
+    <a href="index.html" class="logo">LuxeConvert</a>
+    <ul class="nav-links">
+        <li><a href="index.html#about-me">Sobre Mí</a></li>
+        <li><a href="portfolio.html">Portafolio</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contact">Contacto</a></li>
+    </ul>
+
+    <!-- Menú de Usuario y Theme Switcher -->
+    <div class="user-menu-area">
+
+        <!-- No Logueado -->
+        <div id="logged-out-menu" class="user-menu-container">
+            <a href="#login" id="login-modal-trigger" class="btn btn-secondary">Login</a>
+            <a href="#register" id="register-modal-trigger" class="btn btn-primary">Registro</a>
+            <div class="theme-switcher-container">
+                <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
+                <label for="theme-toggle-guest" class="theme-label">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </label>
+            </div>
+        </div>
+
+        <!-- Logueado -->
+        <div id="logged-in-menu" class="user-menu-container">
+            <span class="username-display"></span>
+            <div class="user-avatar" id="user-menu-toggle">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-dropdown" id="user-dropdown">
+                <div class="dropdown-header">
+                    <p>Hola, <span id="username-dropdown-display"></span></p>
+                </div>
+                <a href="#" class="dropdown-item">Mi Perfil</a>
+                <a href="#" class="dropdown-item">Configuración</a>
+                <div class="dropdown-item theme-switcher-container">
+                     <label for="theme-toggle-user" class="theme-toggle-label">Modo Oscuro</label>
+                     <input type="checkbox" id="theme-toggle-user" class="theme-toggle">
+                     <label for="theme-toggle-user" class="theme-label">
+                         <i class="fas fa-moon"></i>
+                         <i class="fas fa-sun"></i>
+                     </label>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="#" id="logout-button" class="dropdown-item dropdown-item--logout">Cerrar Sesión</a>
+            </div>
+        </div>
+
+    </div>
+</nav>

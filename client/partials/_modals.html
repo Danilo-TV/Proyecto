@@ -1,0 +1,44 @@
+<div id="login-modal" class="auth-modal">
+    <div class="auth-modal-content">
+        <span class="close-modal-btn">&times;</span>
+        <form id="login-form" class="auth-form">
+            <h2 class="form-title">Iniciar Sesión</h2>
+            <p class="form-subtitle">Bienvenida de nuevo. Accede a tu cuenta.</p>
+            <div class="form-group">
+                <input type="text" id="username" name="username" class="form-input" placeholder="Nombre de Usuario" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" class="form-input" placeholder="Contraseña" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            </div>
+            <div id="login-form-status"></div>
+            <p class="auth-switch-link">¿No tienes una cuenta? <a href="#" id="switch-to-register">Regístrate</a></p>
+        </form>
+    </div>
+</div>
+
+<div id="register-modal" class="auth-modal">
+    <div class="auth-modal-content">
+        <span class="close-modal-btn">&times;</span>
+        <form id="register-form" class="auth-form">
+            <h2 class="form-title">Crear Cuenta</h2>
+            <p class="form-subtitle">Únete a la comunidad y empieza tu viaje hacia la belleza.</p>
+            <div class="form-group">
+                <input type="text" id="register-username" name="username" class="form-input" placeholder="Nombre de Usuario" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="register-email" name="email" class="form-input" placeholder="Correo Electrónico" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="register-password" name="password" class="form-input" placeholder="Contraseña" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Registrarme</button>
+            </div>
+            <div id="register-form-status"></div>
+            <p class="auth-switch-link">¿Ya tienes una cuenta? <a href="#" id="switch-to-login">Inicia Sesión</a></p>
+        </form>
+    </div>
+</div>

@@ -3,52 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio - Mi Portafolio Profesional</title>
-    <meta name="description" content="Una selección de mis mejores proyectos de desarrollo web.">
-    
+    <title>Galería de Transformaciones - LuxeConvert</title>
+    <meta name="description" content="Explora nuestra galería de antes y después. Resultados reales de microblading y microshading que hablan por sí mismos.">
+
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    <!-- Estilos Propios -->
+    <!-- Estilos "LuxeConvert" -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
-    <link rel="stylesheet" href="css/blog.css"> 
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/portfolio.css">
 
 </head>
 <body>
 
-    <!-- ==================== PRELOADER ==================== -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
+    <div id="preloader"><div class="spinner"></div></div>
+    <div id="nav-placeholder"></div>
 
-    <!-- ==================== HEADER (DINÁMICO) ==================== -->
-    <header class="hero-section hero-short" id="hero">
-        <div id="nav-placeholder"></div>
-        <div class="hero-content" data-aos="fade-up">
-            <h1 class="headline">Mis Proyectos</h1>
-            <p class="subheadline">Una muestra del trabajo que he realizado.</p>
-        </div>
-    </header>
-
-    <!-- ==================== PORTFOLIO GALLERY SECTION ==================== -->
     <main>
-        <section id="portfolio-full" class="blog-section">
+        <!-- ==================== SECCIÓN DE TÍTULO DE PÁGINA ==================== -->
+        <section class="section section--page-title" data-aos="fade-up">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Todos los Proyectos</h2>
-                <div class="blog-grid" id="portfolio-gallery-container" data-aos="fade-up" data-aos-delay="200">
-                    <p>Cargando proyectos...</p>
+                <h1 class="page-title">Nuestras Transformaciones</h1>
+                <p class="page-subtitle">Resultados reales que inspiran. Explora nuestra galería de antes y después.</p>
+            </div>
+        </section>
+
+        <!-- ==================== GALERÍA COMPLETA ==================== -->
+        <section id="portfolio-full" class="section">
+            <div class="container">
+                <div class="portfolio-grid" id="portfolio-gallery-container" data-aos="fade-up" data-aos-delay="200">
+                    <!-- Las imágenes de la galería se cargarán dinámicamente aquí -->
+                    <p>Cargando galería...</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ==================== FOOTER (DINÁMICO) ==================== -->
     <div id="footer-placeholder"></div>
+    
+    <!-- ==================== MODALS PLACEHOLDER ==================== -->
+    <div id="modals-placeholder"></div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/auth.js" defer></script>
 </body>
 </html>

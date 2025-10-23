@@ -1,107 +1,154 @@
-/* AJUSTE PARA EL HERO EN PÁGINAS INTERIORES */
+/* ==================== REFACTORED: POST DETAIL STYLES ("LUXECONVERT") ==================== */
+
+/* CONTENEDOR PRINCIPAL Y HERO */
 .hero-short {
-    min-height: 25vh; /* Altura más reducida para el banner */
+    min-height: 25vh;
 }
 
 .hero-short .hero-content {
-    display: none; /* Ocultamos el texto principal del hero */
+    display: none;
 }
 
-/* CONTENEDOR PRINCIPAL DE LA PÁGINA DE DETALLE */
 .post-detail-section .container {
-    max-width: 760px; /* Reducido para mayor enfoque */
+    max-width: 820px; /* Ancho optimizado para lectura */
+    margin: auto;
 }
 
-/* ESTILOS DEL ARTÍCULO */
-#post-container {
-    padding: 0; /* Eliminamos el padding del contenedor del post */
-    background-color: transparent; /* Hacemos el fondo transparente */
-    box-shadow: none; /* Quitamos la sombra */
-    margin-bottom: 4rem; /* Margen inferior para separar de los comentarios */
-}
-
-.post-title {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--headline-color);
-    line-height: 1.2;
-    margin-bottom: 1rem;
+/* ENCABEZADO DEL ARTÍCULO */
+.post-header-lux {
     text-align: center;
+    margin: 4rem 0;
 }
 
-.post-meta {
-    font-size: 0.9rem;
-    color: var(--text-light);
-    margin-bottom: 2rem;
-    text-align: center;
+.post-title-lux {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
 }
 
-.post-meta span {
-    margin: 0 0.5rem;
+.post-meta-lux {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    opacity: 0.8;
 }
 
-.post-image {
+.post-meta-lux .separator {
+    margin: 0 0.75rem;
+}
+
+/* IMAGEN PRINCIPAL */
+.post-image-container-lux {
+    margin-bottom: 3rem;
+}
+
+.post-image-lux {
     width: 100%;
-    max-height: 450px;
+    height: auto;
+    max-height: 500px;
     object-fit: cover;
-    border-radius: var(--border-radius-large);
-    margin-bottom: 2.5rem;
+    border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.post-content {
+/* CUERPO DEL ARTÍCULO */
+.post-body-lux {
     font-size: 1.15rem;
-    line-height: 1.8;
+    line-height: 1.9;
     color: var(--text-color);
 }
 
-.post-content h1, .post-content h2, .post-content h3 {
-    color: var(--headline-color);
-    margin-top: 2.5rem;
+.post-body-lux h1, .post-body-lux h2, .post-body-lux h3, .post-body-lux h4 {
+    color: var(--text-color);
+    margin-top: 3rem;
     margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+
+.post-body-lux p, .post-body-lux ul, .post-body-lux ol {
+    margin-bottom: 1.5rem;
+}
+
+.post-body-lux a {
+    color: var(--primary-color);
+    text-decoration: underline;
 }
 
 /* SECCIÓN DE COMENTARIOS */
 .comments-section {
-    border-top: 1px solid var(--border-color);
-    padding-top: 3rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 4rem;
+    padding-top: 4rem;
+}
+
+[data-theme="dark"] .comments-section {
+    border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 .comments-section .section-title {
     text-align: center;
     font-size: 2.2rem;
     margin-bottom: 3rem;
+    font-weight: 600;
 }
 
+/* LISTA DE COMENTARIOS */
 .comments-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.comment-item {
-    background-color: var(--background-light);
-    padding: 1.5rem;
-    border-radius: var(--border-radius-large);
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--border-color);
-}
-
-.comment-author {
-    font-weight: bold;
-    color: var(--headline-color);
-    margin-bottom: 0.5rem;
-}
-
-.comment-body {
+.no-comments-message {
+    text-align: center;
+    font-style: italic;
     color: var(--text-color);
-    margin-bottom: 0.75rem;
-    line-height: 1.6;
+    opacity: 0.7;
+    padding: 2rem 0;
 }
 
-.comment-date {
-    font-size: 0.8rem;
-    color: var(--text-light);
+/* TARJETA DE COMENTARIO INDIVIDUAL */
+.comment-card-lux {
+    background-color: var(--card-bg-color);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 1.75rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .comment-card-lux {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.comment-card-lux__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.comment-author-lux {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.comment-date-lux {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+.comment-body-lux {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin: 0;
 }
 
 /* FORMULARIO DE COMENTARIOS */
@@ -111,70 +158,48 @@
 
 #comment-form textarea {
     width: 100%;
-    min-height: 120px;
+    min-height: 130px;
     padding: 1rem;
-    border-radius: var(--border-radius-large);
-    border: 1px solid var(--border-color);
-    background-color: var(--background-light);
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.15);
+    background-color: var(--background-color);
     color: var(--text-color);
     font-size: 1rem;
     margin-bottom: 1rem;
     resize: vertical;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#comment-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.15);
 }
 
 #comment-form .btn-primary {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
+    background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 0.8rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: transform 0.3s;
+    border: none;
 }
 
-#comment-login-prompt a {
-    color: var(--primary-color);
-    font-weight: bold;
+#comment-form .btn-primary:hover {
+    transform: translateY(-2px);
 }
 
-/* TEMA OSCURO */
-[data-theme='dark'] .post-title,
-[data-theme='dark'] .post-content h1,
-[data-theme='dark'] .post-content h2,
-[data-theme='dark'] .post-content h3 {
-    color: var(--headline-color-dark);
+#comment-login-prompt {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
 }
 
-[data-theme='dark'] .post-meta {
-    color: var(--text-light-dark);
-}
-
-[data-theme='dark'] .post-content {
-    color: var(--text-color-dark);
-}
-
-[data-theme='dark'] .comments-section {
-    border-top-color: var(--border-color-dark);
-}
-
-[data-theme='dark'] .comment-item {
-    background-color: var(--background-dark-soft);
-    border-color: var(--border-color-dark);
-}
-
-[data-theme='dark'] .comment-author {
-    color: var(--headline-color-dark);
-}
-
-[data-theme='dark'] .comment-body {
-    color: var(--text-color-dark);
-}
-
-[data-theme='dark'] .comment-date {
-    color: var(--text-light-dark);
-}
-
-[data-theme='dark'] #comment-form textarea {
-    background-color: var(--background-dark-soft);
-    border-color: var(--border-color-dark);
-    color: var(--text-color-dark);
-}
-
-[data-theme='dark'] #comment-login-prompt a {
-    color: var(--primary-color);
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .post-title-lux {
+        font-size: 2.4rem;
+    }
 }

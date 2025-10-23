@@ -1,15 +1,38 @@
-REALIZADOS!!
-Aplicaciones de usuarios, portafolio y blog realizadas.
-Frontend de la landing page realizada, login realizado.
-Conexion del Frontend con el Backend realizado.
-Normas del uso de la IA realizado.
-Frontend y Backend de blog realizado.
+## ✅ REALIZADOS
 
+### Funcionalidades Implementadas
+- **Aplicaciones Core:** Usuarios, Portafolio y Blog.
+- **Frontend:** Landing Page, Blog (creación y visualización), Autenticación (Login/Modales).
+- **Integración:** Conexión completa entre el Frontend estático y el Backend API.
+- **Documentación:** Se han establecido las normas para el uso de la IA en el desarrollo.
 
-PENDIENTES!!
-El dashboard
-El ecommers
-Las redes sociales
-Administración principal
-Pruebas de seguridad en todas las apps
-Pruebas de funcionalidad en todas las apps
+### Refactorización "LuxeConvert" (Finalizada)
+- **Objetivo:** Unificar la estética del sitio bajo un sistema de diseño premium, consistente y con modo oscuro.
+- **Sistema de Diseño:** Se implementó un sistema de diseño global en `style.css` usando variables CSS.
+- **Componentes:** Se rediseñaron las tarjetas de portafolio, la vista de detalle de proyecto y la vista de detalle del blog.
+- **Conexión API:** Se reconectó el listado del portafolio al endpoint real del backend.
+- **Ajustes Finales:**
+    - **Tema Oscuro:** Corregido el conflicto que impedía el cambio de tema.
+    - **Footer:** Corregidos los colores del footer en el tema claro.
+    - **Formulario:** Ajustado el espaciado del botón de suscripción.
+
+---
+
+## ⏳ PENDIENTES
+
+### Tareas Críticas
+- **API Portafolio (Detalle):** El endpoint `/api/portafolio/items_portafolio/{id}/` sigue devolviendo 404. Es necesario que el backend corrija esto para poder eliminar el código de simulación (mock) en `client/js/project-detail.js`.
+
+### Próximos Módulos (Features)
+- **Dashboard de Usuario:** Desarrollar la sección privada para usuarios.
+- **E-commerce:** Implementar el carrito de compras y el proceso de checkout.
+- **Redes Sociales:** Integrar APIs o feeds de redes sociales.
+- **Panel de Administración:** Desarrollar la interfaz para la gestión de contenido.
+
+### Mejoras de Arquitectura y Calidad (Frontend)
+- **Centralizar Acceso a API:** Crear un módulo de servicio (`client/js/apiService.js`) para centralizar todas las llamadas `fetch` al backend. Esto mejorará la mantenibilidad y reducirá la duplicación de código.
+- **Gestión de Estados de UI:** Implementar un sistema visual para los estados de carga (spinners, skeletons) y error (mensajes amigables) en las interacciones con la API para mejorar la experiencia de usuario (UX).
+
+### Calidad y Pruebas
+- **Pruebas de Seguridad:** Realizar auditorías de seguridad en todas las aplicaciones del backend.
+- **Pruebas de Funcionalidad:** Implementar un plan de testing E2E (End-to-End) para verificar todos los flujos de usuario.

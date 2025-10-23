@@ -3,44 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Proyecto - Mi Portafolio Profesional</title>
-    
+    <!-- El título y la descripción se actualizarán dinámicamente con JS -->
+    <title>Detalle de Transformación - LuxeConvert</title>
+    <meta name="description" content="Detalles de una de nuestras transformaciones de belleza, incluyendo imágenes de antes y después.">
+
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    <!-- Estilos Propios -->
+    <!-- Estilos "LuxeConvert" -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
+    <link rel="stylesheet" href="css/forms.css">
     <link rel="stylesheet" href="css/project-detail.css">
 
 </head>
 <body>
 
-    <!-- ==================== PRELOADER ==================== -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- ==================== NAV PLACEHOLDER ==================== -->
+    <div id="preloader"><div class="spinner"></div></div>
     <div id="nav-placeholder"></div>
 
-    <!-- ==================== PROJECT DETAIL SECTION ==================== -->
     <main>
-        <article id="project-container" class="project-container container">
-            <!-- El contenido se cargará aquí dinámicamente -->
-            <p>Cargando proyecto...</p>
-        </article>
+        <section class="section">
+            <div class="container">
+                <!-- El contenido del detalle del proyecto se inyectará aquí usando el template -->
+                <article id="project-container" class="project-detail-container">
+                    <p class="form-input-soft">Cargando detalles de la transformación...</p> 
+                </article>
+            </div>
+        </section>
     </main>
 
-    <!-- ==================== FOOTER PLACEHOLDER ==================== -->
     <div id="footer-placeholder"></div>
 
-    <a href="https://wa.me/TUNUMERODETELEFONO" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <!-- ==================== MODALS PLACEHOLDER ==================== -->
+    <div id="modals-placeholder"></div>
+
+    <!-- ==================== PLANTILLA PARA DETALLE DE PROYECTO ==================== -->
+    <template id="project-detail-template">
+        <!-- HEADER DEL PROYECTO -->
+        <header class="project-header" data-aos="fade-in">
+            <h1 id="project-title" class="project-title"></h1>
+            <p id="project-date" class="project-meta"></p>
+        </header>
+
+        <!-- GALERÍA DE IMÁGENES "ANTES Y DESPUÉS" -->
+        <section class="project-gallery" data-aos="fade-up">
+            <div class="image-comparison-container">
+                <figure class="image-container">
+                    <img id="project-img-antes" src="" alt="Estado inicial del tratamiento" loading="lazy">
+                    <figcaption class="image-label">Antes</figcaption>
+                </figure>
+                <figure class="image-container">
+                    <img id="project-img-despues" src="" alt="Resultado final del tratamiento" loading="lazy">
+                    <figcaption class="image-label">Después</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- CONTENIDO PRINCIPAL Y CTA -->
+        <div class="project-main-content" data-aos="fade-up" data-aos-delay="100">
+            <div class="project-description-wrapper">
+                <h2 class="section__subtitle">Sobre esta Transformación</h2>
+                <p id="project-description" class="project-description-text"></p>
+            </div>
+
+            <aside class="project-cta-card">
+                <h3>¿Interesada en un resultado similar?</h3>
+                <p>Nuestras artistas certificadas pueden diseñar las cejas perfectas para ti. Agenda una consulta gratuita.</p>
+                <div class="cta-button-container">
+                     <a href="index.html#contact" class="btn btn-primary btn-lg">Agendar Consulta</a>
+                </div>
+                <div class="trust-elements">
+                    <span><i class="fas fa-check-circle"></i> Calidad Garantizada</span>
+                    <span><i class="fas fa-medal"></i> Artistas Certificadas</span>
+                    <span><i class="fas fa-star"></i> Clientas Satisfechas</span>
+                </div>
+            </aside>
+        </div>
+    </template>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/auth.js" defer></script>
     <script src="js/project-detail.js"></script> 
 </body>
 </html>

@@ -1,199 +1,152 @@
-/* ==================== USER MENU AREA ==================== */
-.user-menu-area {
-    position: relative;
+/* ====================================================================================
+   USER-MENU.CSS - Estilos para el menú de usuario y dropdown (ALTA ESPECIFICIDAD)
+   ==================================================================================== */
+
+/* Forzando el contenedor principal a usar Flexbox */
+.main-nav > .user-menu-area {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
 }
 
-/* Contenedor para los controles cuando el usuario no está logueado */
-.logged-out-controls {
-    display: flex;
+/* Asegurando que el menú correcto se muestre */
+.user-menu-area > .user-menu-container {
+    display: none; /* Oculto por defecto */
     align-items: center;
-    gap: 15px; /* Espacio entre los botones y el switcher */
+    gap: 1.5rem;
 }
 
-#logged-out-menu .user-menu-btn {
-    color: var(--text-color);
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+.user-menu-area > .user-menu-container.show-menu {
+    display: flex !important; /* Mostrar el menú correcto */
 }
 
-#logged-out-menu .user-menu-btn.register {
-    background-color: var(--primary-color);
-    color: white;
+/* Estilos para el botón de Login (sin cambios de especificidad) */
+#logged-out-menu .btn-secondary {
+    padding: 0.5rem 1.5rem;
 }
 
-#logged-out-menu .user-menu-btn:hover {
-    background-color: var(--primary-color-dark);
-}
-
-/* Estilos para el interruptor de tema fuera del menú de usuario */
-.theme-switcher-item-standalone {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-color);
-}
-
-.theme-switcher-item-standalone .fas {
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-
-/* ==================== MENÚ DE USUARIO LOGUEADO ==================== */
-#logged-in-menu .user-menu-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0;
-}
-
-#logged-in-menu .user-image {
+/* Estilos para el avatar de usuario (sin cambios de especificidad) */
+.user-avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 10px;
-    border: 2px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
 }
 
-#logged-in-menu .username-display {
-    color: var(--text-color);
-    font-weight: 500;
+.user-avatar:hover {
+    transform: scale(1.1);
+}
+
+.username-display {
+    font-weight: 600;
+    display: none; 
 }
 
 .user-dropdown {
     position: absolute;
-    top: 120%;
-    right: 0;
-    background-color: var(--background-color-light);
+    top: calc(var(--navbar-height) - 10px);
+    right: 2.5rem;
+    background-color: var(--card-bg-color);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    z-index: 1000;
-    display: none; /* Oculto por defecto */
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    width: 260px;
+    z-index: 1100;
     opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .user-dropdown.show {
-    display: block;
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
 }
 
-.user-header {
-    padding: 16px;
-    text-align: center;
+.dropdown-header {
+    padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
 }
 
-.user-header .user-image-large {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.user-header p {
+.dropdown-header p {
     margin: 0;
     font-weight: 600;
-    color: var(--heading-color);
-}
-
-.user-header small {
-    color: var(--text-color-light);
-    font-size: 0.8rem;
-}
-
-.user-body, .user-footer {
-    padding: 8px 0;
+    font-size: 1rem;
 }
 
 .dropdown-item {
-    display: flex;
+    display: flex; 
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
+    padding: 0.8rem 1.5rem;
     color: var(--text-color);
-    text-decoration: none;
     font-size: 0.95rem;
+    transition: background-color 0.2s;
 }
 
 .dropdown-item:hover {
-    background-color: var(--background-color-hover);
+    background-color: rgba(0,0,0,0.05);
 }
 
-.user-footer {
-    border-top: 1px solid var(--border-color);
-    padding: 8px;
+[data-theme="dark"] .dropdown-item:hover {
+    background-color: rgba(255,255,255,0.05);
 }
 
-.btn-logout {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #f44336;
-    color: white;
-    border-radius: 5px;
+.dropdown-item--logout {
+    color: #e74c3c;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 0.5rem 0;
+}
+
+
+/* ==================== THEME SWITCHER (ALTA ESPECIFICIDAD) ==================== */
+.main-nav .theme-switcher-container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.8rem !important;
+}
+
+.theme-toggle {
+    display: none; 
+}
+
+.theme-label {
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-logout:hover {
-    background-color: #d32f2f;
-}
-
-/* ==================== INTERRUPTOR DE TEMA (GENÉRICO) ==================== */
-.theme-switcher-item span {
-    flex-grow: 1;
-}
-
-.theme-switch {
+    font-size: 1.3rem;
+    color: var(--text-light);
     position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
-.theme-switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
+.theme-label .fa-sun, .theme-label .fa-moon {
     position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 24px;
+    transition: transform 0.3s, opacity 0.3s;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
+.theme-label .fa-sun { transform: scale(0); opacity: 0; }
+
+.theme-toggle:checked + .theme-label .fa-moon {
+    transform: scale(0); opacity: 0;
 }
 
-input:checked + .slider {
-    background-color: var(--primary-color);
+.theme-toggle:checked + .theme-label .fa-sun {
+    transform: scale(1); opacity: 1;
 }
 
-input:checked + .slider:before {
-    transform: translateX(20px);
+@media (min-width: 768px) {
+    .username-display {
+        display: inline; 
+    }
 }

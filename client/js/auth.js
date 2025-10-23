@@ -1,77 +1,108 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // La URL base correcta es /auth/ según la configuración de Django.
-    const API_URL = 'http://localhost:8000/auth/';
 
+    // Este script se ejecuta después de que app.js ha cargado los componentes.
+
+    // --- Constantes y Selectores del DOM ---
+    const API_BASE_URL = 'http://127.0.0.1:8000/api/auth/';
+    const loginModal = document.getElementById('login-modal');
+    const registerModal = document.getElementById('register-modal');
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
-    const formStatus = document.getElementById('form-status');
+    const loginStatus = document.getElementById('login-form-status');
+    const registerStatus = document.getElementById('register-form-status');
 
-    const setStatus = (message, isError = false) => {
-        if (formStatus) {
-            formStatus.textContent = message;
-            formStatus.style.color = isError ? 'red' : 'green';
-        }
+    // --- No se puede continuar si los elementos básicos no están en el DOM ---
+    if (!loginForm || !registerForm) {
+        return;
+    }
+
+    // --- Funciones de Utilidad (ya definidas en app.js, pero las duplicamos para mantener este script autocontenido) ---
+    const openModal = (modal) => modal && modal.classList.add('show');
+    const closeModal = (modal) => modal && modal.classList.remove('show');
+
+    // =========================================================================
+    // FUNCIÓN MEJORADA PARA MOSTRAR ESTADO
+    // =========================================================================
+    const setStatus = (statusElement, message, type) => {
+        if (!statusElement) return;
+        statusElement.textContent = message;
+        // Usamos un enfoque de clases BEM para mayor claridad
+        statusElement.className = 'form-status'; 
+        statusElement.classList.add(`form-status--${type}`);
+        statusElement.style.display = 'block';
     };
 
-    if (registerForm) {
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            setStatus('Enviando datos...', false);
-            const formData = new FormData(registerForm);
-            const data = Object.fromEntries(formData.entries());
+    // =========================================================================
+    // LÓGICA DEL FORMULARIO DE REGISTRO (CON UX MEJORADA)
+    // =========================================================================
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        setStatus(registerStatus, 'Procesando tu registro...', 'processing');
 
-            try {
-                const response = await fetch(`${API_URL}register/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                    credentials: 'include',
-                });
+        const formData = new FormData(registerForm);
+        const data = Object.fromEntries(formData.entries());
 
-                const result = await response.json();
+        try {
+            const response = await fetch(`${API_BASE_URL}register/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
 
-                if (response.ok) {
-                    setStatus('¡Registro exitoso! Redirigiendo...', false);
-                    setTimeout(() => { window.location.href = 'login.html'; }, 2000);
-                } else {
-                    const errorMessage = Object.values(result).join('\n');
-                    setStatus(`Error en el registro: ${errorMessage}`, true);
-                }
-            } catch (error) {
-                console.error('Error de red o de servidor:', error);
-                setStatus('No se pudo conectar con el servidor. Revisa que la URL de la API sea correcta y el servidor backend esté activo.', true);
+            const result = await response.json();
+
+            if (response.ok) {
+                setStatus(registerStatus, '¡Registro exitoso! Por favor, inicia sesión.', 'success');
+                
+                setTimeout(() => {
+                    closeModal(registerModal);
+                    openModal(loginModal);
+                    registerForm.reset();
+                    registerStatus.style.display = 'none';
+                }, 2000);
+            } else {
+                const errorMessage = Object.values(result).flat().join(' ');
+                setStatus(registerStatus, errorMessage || 'Ocurrió un error en el registro.', 'error');
             }
-        });
-    }
+        } catch (error) {
+            setStatus(registerStatus, 'No se pudo conectar con el servidor.', 'error');
+        }
+    });
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            setStatus('Iniciando sesión...', false);
-            const formData = new FormData(loginForm);
-            const data = Object.fromEntries(formData.entries());
+    // =========================================================================
+    // LÓGICA DE INICIO DE SESIÓN (CON RECARGA SEGURA)
+    // =========================================================================
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        setStatus(loginStatus, 'Iniciando sesión...', 'processing');
 
-            try {
-                const response = await fetch(`${API_URL}login/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                    credentials: 'include',
-                });
-                const result = await response.json();
+        const formData = new FormData(loginForm);
+        const data = Object.fromEntries(formData.entries());
 
-                if (response.ok) {
-                    setStatus('¡Inicio de sesión exitoso! Redirigiendo...', false);
-                    localStorage.setItem('authToken', result.token);
-                    localStorage.setItem('username', result.username); 
-                    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
-                } else {
-                    setStatus(result.error || 'Usuario o contraseña incorrectos.', true);
-                }
-            } catch (error) {
-                console.error('Error de red o de servidor:', error);
-                setStatus('No se pudo conectar con el servidor. Revisa que la URL de la API sea correcta y el servidor backend esté activo.', true);
+        try {
+            const response = await fetch(`${API_BASE_URL}login/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            
+            const result = await response.json();
+
+            if (response.ok) {
+                setStatus(loginStatus, '¡Bienvenida! Actualizando la página...', 'success');
+                
+                localStorage.setItem('authToken', result.access);
+                localStorage.setItem('username', result.user.username);
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+
+            } else {
+                setStatus(loginStatus, result.detail || 'Usuario o contraseña incorrectos.', 'error');
             }
-        });
-    }
+        } catch (error) {
+            setStatus(loginStatus, 'No se pudo conectar con el servidor.', 'error');
+        }
+    });
 });

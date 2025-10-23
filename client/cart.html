@@ -3,52 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras - Mi Portafolio Profesional</title>
-    
+    <title>Carrito de Compras - LuxeConvert</title>
+    <meta name="description" content="Revisa los servicios seleccionados y prepárate para finalizar tu compra.">
+
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    <!-- Estilos Propios -->
+    <!-- Estilos "LuxeConvert" -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
-    <link rel="stylesheet" href="css/cart.css"> <!-- Estilos para esta página -->
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/cart.css">
 
 </head>
 <body>
 
-    <!-- ==================== PRELOADER ==================== -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- ==================== NAV PLACEHOLDER ==================== -->
+    <div id="preloader"><div class="spinner"></div></div>
     <div id="nav-placeholder"></div>
 
-    <!-- ==================== CART SECTION ==================== -->
     <main>
-        <section class="hero-section hero-short">
-             <div class="hero-content" data-aos="fade-up">
-                <h1 class="headline">Carrito de Compras</h1>
-                <p class="subheadline">Confirma tu selección antes de proceder al pago.</p>
+        <!-- ==================== SECCIÓN DE TÍTULO DE PÁGINA ==================== -->
+        <section class="section section--page-title" data-aos="fade-up">
+            <div class="container">
+                <h1 class="page-title">Carrito de Compras</h1>
+                <p class="page-subtitle">Confirma tu selección antes de proceder al pago.</p>
             </div>
         </section>
-        <section class="cart-section container">
-            <div id="cart-container" data-aos="fade-up">
+
+        <!-- ==================== CONTENIDO PRINCIPAL DEL CARRITO ==================== -->
+        <section id="cart-section" class="section">
+            <div class="container" id="cart-container" data-aos="fade-up" data-aos-delay="200">
                 <!-- El contenido del carrito se cargará aquí dinámicamente -->
                 <p>Cargando carrito...</p>
             </div>
         </section>
     </main>
 
-    <!-- ==================== FOOTER PLACEHOLDER ==================== -->
     <div id="footer-placeholder"></div>
 
-    <a href="https://wa.me/TUNUMERODETELEFONO" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/TUNUMERODETELEFONO" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/app.js"></script>
     <script src="js/cart.js"></script> 
+
 </body>
 </html>
