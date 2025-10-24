@@ -38,13 +38,17 @@
     margin: 0 0.75rem;
 }
 
-/* IMAGEN PRINCIPAL */
+/* IMAGEN PRINCIPAL (CONTENEDOR) */
 .post-image-container-lux {
     margin-bottom: 3rem;
+    /* Ajuste Senior: Centrar el contenedor y darle un ancho máximo */
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .post-image-lux {
-    width: 100%;
+    width: 100%; /* La imagen ocupa el 100% de su nuevo contenedor (700px max) */
     height: auto;
     max-height: 500px;
     object-fit: cover;
@@ -57,6 +61,12 @@
     font-size: 1.15rem;
     line-height: 1.9;
     color: var(--text-color);
+    text-align: center; /* Texto centrado como se solicitó */
+    
+    /* Ajuste Senior: Centrar el bloque de texto y darle el mismo ancho que la imagen */
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .post-body-lux h1, .post-body-lux h2, .post-body-lux h3, .post-body-lux h4 {

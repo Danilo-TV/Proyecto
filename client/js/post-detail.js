@@ -1,181 +1,140 @@
-document.addEventListener('DOMContentLoaded', () => {
+import { getBlogPostDetails, getCommentsForPost, createComment } from './apiService.js';
+import { isUserLoggedIn } from './auth.js';
 
-    const API_BASE_URL = 'http://127.0.0.1:8000/api';
+document.addEventListener('DOMContentLoaded', async () => {
 
-    // Contenedores principales del DOM
+    // --- Selectores del DOM ---
     const postContainer = document.getElementById('post-container');
     const commentsList = document.getElementById('comments-list');
-    const commentsLoading = document.getElementById('comments-loading');
+    const commentsSection = document.getElementById('comments-section');
     const commentFormContainer = document.getElementById('comment-form-container');
+    const commentLoginFormPrompt = document.getElementById('comment-login-prompt');
     const commentForm = document.getElementById('comment-form');
-    const commentLoginPrompt = document.getElementById('comment-login-prompt');
+    const commentBody = document.getElementById('comment-body');
 
-    // Obtiene el slug del post desde la URL, no el ID
-    const getPostSlug = () => {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('slug');
+    const getPostId = () => new URLSearchParams(window.location.search).get('id');
+
+    // --- Renderizado ---
+    const renderError = (container, message) => {
+        container.innerHTML = `<div class="form-status form-status--error" style="display: block;">${message}</div>`;
     };
 
-    const postSlug = getPostSlug();
+    const renderPost = (post) => {
+        document.title = `${post.titulo} - LuxeConvert`;
+        document.querySelector('meta[name="description"]').setAttribute('content', post.contenido.substring(0, 155));
+        
+        const postDate = new Date(post.fecha_publicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
-    if (!postSlug) {
-        if (postContainer) postContainer.innerHTML = '<p class="form-input-soft">Error: No se ha especificado un artículo.</p>';
-        if (commentsLoading) commentsLoading.style.display = 'none';
+        postContainer.innerHTML = `
+            <div class="post-header-lux" data-aos="fade-down">
+                <h1 class="post-title-lux">${post.titulo}</h1>
+                <p class="post-meta-lux">
+                    <span>Por ${post.autor_username || 'Admin'}</span>
+                    <span class="separator">|</span>
+                    <span>${postDate}</span>
+                </p>
+            </div>
+            <div class="post-image-container-lux" data-aos="fade-down" data-aos-delay="150">
+                <img src="${post.imagen_principal}" alt="Imagen principal del artículo: ${post.titulo}" class="post-image-lux">
+            </div>
+            <div class="post-body-lux" data-aos="fade-down" data-aos-delay="300">
+                ${post.contenido}
+            </div>
+        `;
+    };
+
+    const renderComments = (comments) => {
+        commentsList.innerHTML = '';
+
+        if (comments.length === 0) {
+            commentsList.innerHTML = '<p class="no-comments-message">Todavía no hay comentarios. ¡Sé el primero en compartir tu opinión!</p>';
+            return;
+        }
+
+        comments.forEach(comment => {
+            const commentDate = new Date(comment.fecha_comentario).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric'});
+            const li = document.createElement('li');
+            li.className = 'comment-card-lux';
+            li.innerHTML = `
+                <div class="comment-card-lux__header">
+                    <span class="comment-author-lux">${comment.autor_username || 'Anónimo'}</span>
+                    <span class="comment-date-lux">${commentDate}</span>
+                </div>
+                <p class="comment-body-lux">${comment.cuerpo_comentario}</p>
+            `;
+            commentsList.appendChild(li);
+        });
+    };
+
+    const handleCommentForm = () => {
+        if (isUserLoggedIn()) {
+            commentLoginFormPrompt.style.display = 'none';
+            commentForm.style.display = 'block';
+        } else {
+            commentLoginFormPrompt.style.display = 'block';
+            commentForm.style.display = 'none';
+        }
+    };
+
+    // --- Lógica de la aplicación ---
+    const postId = getPostId();
+    if (!postId) {
+        renderError(postContainer, 'No se ha especificado ningún artículo.');
+        commentsSection.style.display = 'none';
         return;
     }
 
-    const formatDate = (dateString) => {
-        if (!dateString) return 'Fecha no disponible';
-        return new Date(dateString).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-    };
+    // Cargar Post y Comentarios en paralelo
+    const [postResult, commentsResult] = await Promise.all([
+        getBlogPostDetails(postId),
+        getCommentsForPost(postId)
+    ]);
 
-    /**
-     * Renderiza el contenido principal del post con el nuevo diseño.
-     */
-    const renderPost = (post) => {
-        document.title = `${post.title} - LuxeConvert`; // Actualiza el título de la página
-        if (!postContainer) return;
-        
-        postContainer.innerHTML = `
-            <header class="post-header" data-aos="fade-in">
-                <h1 class="section__title">${post.title}</h1>
-                <div class="post-meta">
-                    <span>Por <strong>${post.author_username || 'Anónimo'}</strong></span>
-                    <span class="separator">&bull;</span>
-                    <span>${formatDate(post.published_date)}</span>
-                    <span class="separator">&bull;</span>
-                    <span>Categoría: ${post.category_name}</span>
-                </div>
-            </header>
-            <div class="post-image-container" data-aos="fade-up">
-                <img src="${post.image_url}" alt="${post.title}" class="post-image">
-            </div>
-            <div class="post-body" data-aos="fade-up" data-aos-delay="100">
-                ${post.body} 
-            </div>
-        `;
-    };
-
-    /**
-     * Renderiza un único comentario con el nuevo diseño.
-     */
-    const renderComment = (comment) => {
-        const li = document.createElement('li');
-        li.className = 'comment-card';
-        li.innerHTML = `
-            <div class="comment-header">
-                <strong class="comment-author">${comment.user_username || 'Usuario'}</strong>
-                <time class="comment-date">${formatDate(comment.created_at)}</time>
-            </div>
-            <p class="comment-body">${comment.body}</p>
-        `;
-        return li;
-    };
-
-    /**
-     * Carga el post y sus comentarios desde la API RESTful.
-     */
-    const loadPostAndComments = async () => {
-        try {
-            const [postResponse, commentsResponse] = await Promise.all([
-                fetch(`${API_BASE_URL}/blog/posts/${postSlug}/`),
-                fetch(`${API_BASE_URL}/blog/posts/${postSlug}/comments/`)
-            ]);
-
-            if (!postResponse.ok) throw new Error('No se pudo cargar el artículo.');
-            const post = await postResponse.json();
-            renderPost(post);
-
-            if (commentsLoading) commentsLoading.style.display = 'none';
-            if (!commentsList) return;
-
-            commentsList.innerHTML = '';
-            if (commentsResponse.ok) {
-                const comments = await commentsResponse.json();
-                if (comments.length > 0) {
-                    comments.forEach(comment => commentsList.appendChild(renderComment(comment)));
-                } else {
-                    commentsList.innerHTML = '<li class="form-input-soft">Todavía no hay comentarios. ¡Sé el primero!</li>';
-                }
-            } else {
-                 commentsList.innerHTML = '<li class="form-input-soft">No se pudieron cargar los comentarios.</li>';
-            }
-
-        } catch (error) {
-            console.error("Error al cargar los datos:", error);
-            if (postContainer) postContainer.innerHTML = `<p class="form-input-soft">Error al cargar el contenido: ${error.message}</p>`;
-            if (commentsLoading) commentsLoading.textContent = 'No se pudieron cargar los comentarios.';
-        } finally {
-            if (typeof AOS !== 'undefined') {
-                AOS.refresh(); // Usa refresh para animar el contenido cargado dinámicamente
-            }
-        }
-    };
-
-    /**
-     * Configura la visibilidad del formulario de comentarios basada en el estado de autenticación.
-     */
-    const setupCommentForm = () => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            if (commentLoginPrompt) commentLoginPrompt.style.display = 'none';
-            if (commentForm) commentForm.style.display = 'block';
-        } else {
-            if (commentLoginPrompt) commentLoginPrompt.style.display = 'block';
-            if (commentForm) commentForm.style.display = 'none';
-        }
-    };
-
-    /**
-     * Maneja el envío del formulario de nuevo comentario.
-     */
-    if (commentForm) {
-        commentForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const commentBodyInput = document.getElementById('comment-body');
-            const commentText = commentBodyInput.value.trim();
-            const token = localStorage.getItem('authToken');
-
-            if (!commentText) {
-                // Podríamos agregar un mensaje de estado aquí también
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/blog/posts/${postSlug}/comments/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ body: commentText })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.detail || 'Error al enviar el comentario.');
-                }
-
-                const newComment = await response.json();
-                
-                // Limpia el mensaje de "no hay comentarios" si existe
-                const noCommentsMessage = commentsList.querySelector('.form-input-soft');
-                if (noCommentsMessage) {
-                    noCommentsMessage.remove();
-                }
-
-                commentsList.appendChild(renderComment(newComment));
-                commentBodyInput.value = '';
-
-            } catch (error) {
-                console.error('Error al enviar comentario:', error);
-                // En una implementación futura, mostrar este error en el DOM
-                alert(`Error: ${error.message}`);
-            }
-        });
+    // Renderizar Post
+    if (postResult.error) {
+        renderError(postContainer, `Error al cargar el artículo: ${postResult.error}`);
+    } else {
+        renderPost(postResult.data);
     }
 
-    // --- INICIALIZACIÓN ---
-    loadPostAndComments();
-    setupCommentForm();
+    // Renderizar Comentarios
+    if (commentsResult.error) {
+        commentsList.innerHTML = '<p class="no-comments-message">No se pudieron cargar los comentarios.</p>';
+    } else {
+        renderComments(commentsResult.data);
+    }
+
+    // Gestionar Formulario de Comentarios
+    handleCommentForm();
+    commentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const content = commentBody.value.trim();
+        if (!content) return;
+
+        const commentData = { 
+            post_fk: postId, 
+            cuerpo_comentario: content,
+        };
+
+        const { data: newComment, error } = await createComment(commentData);
+
+        if (error) {
+            alert(`Error al enviar el comentario: ${error}`);
+        } else {
+            commentBody.value = '';
+            const { data, error: fetchError } = await getCommentsForPost(postId);
+            if (!fetchError) {
+                renderComments(data);
+                const lastComment = commentsList.querySelector('.comment-card-lux:last-child');
+                if(lastComment) lastComment.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+    
+    // Refrescar AOS después del renderizado dinámico
+    setTimeout(() => {
+        if (window.AOS) {
+            AOS.refresh();
+        }
+    }, 100);
 });

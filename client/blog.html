@@ -36,8 +36,7 @@
             <div class="container">
                 <!-- Contenedor para las tarjetas de artículos -->
                 <div class="blog-grid" id="blog-posts-container" data-aos="fade-up" data-aos-delay="200">
-                    <!-- Mensaje de carga inicial -->
-                    <p>Cargando artículos...</p>
+                    <!-- JS inyectará aquí un spinner/error o las tarjetas de los posts -->
                 </div>
 
                 <!-- Botón para paginación o carga infinita (funcionalidad futura) -->
@@ -56,7 +55,9 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/auth.js" defer></script>
+    <script src="js/auth.js" type="module" defer></script>
+    <!-- Script específico del Blog, cargado como módulo -->
+    <script src="js/blog.js" type="module" defer></script>
 
 </body>
 </html>

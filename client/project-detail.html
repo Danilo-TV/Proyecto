@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- El título y la descripción se actualizarán dinámicamente con JS -->
     <title>Detalle de Transformación - LuxeConvert</title>
     <meta name="description" content="Detalles de una de nuestras transformaciones de belleza, incluyendo imágenes de antes y después.">
 
@@ -26,9 +25,8 @@
     <main>
         <section class="section">
             <div class="container">
-                <!-- El contenido del detalle del proyecto se inyectará aquí usando el template -->
                 <article id="project-container" class="project-detail-container">
-                    <p class="form-input-soft">Cargando detalles de la transformación...</p> 
+                    <!-- El JS inyectará aquí un spinner o el contenido final -->
                 </article>
             </div>
         </section>
@@ -41,13 +39,11 @@
 
     <!-- ==================== PLANTILLA PARA DETALLE DE PROYECTO ==================== -->
     <template id="project-detail-template">
-        <!-- HEADER DEL PROYECTO -->
         <header class="project-header" data-aos="fade-in">
             <h1 id="project-title" class="project-title"></h1>
             <p id="project-date" class="project-meta"></p>
         </header>
 
-        <!-- GALERÍA DE IMÁGENES "ANTES Y DESPUÉS" -->
         <section class="project-gallery" data-aos="fade-up">
             <div class="image-comparison-container">
                 <figure class="image-container">
@@ -61,7 +57,6 @@
             </div>
         </section>
 
-        <!-- CONTENIDO PRINCIPAL Y CTA -->
         <div class="project-main-content" data-aos="fade-up" data-aos-delay="100">
             <div class="project-description-wrapper">
                 <h2 class="section__subtitle">Sobre esta Transformación</h2>
@@ -86,7 +81,7 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/auth.js" defer></script>
-    <script src="js/project-detail.js"></script> 
+    <script src="js/auth.js" type="module" defer></script>
+    <script src="js/project-detail.js" type="module" defer></script> 
 </body>
 </html>

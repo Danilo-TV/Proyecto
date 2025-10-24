@@ -9,11 +9,14 @@
     <!-- Librerías Externas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 
     <!-- Estilos "LuxeConvert" -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/user-menu.css">
     <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/carousel.css"> <!-- Nuevos estilos para el carrusel -->
 
 </head>
 <body>
@@ -64,14 +67,22 @@
             </div>
         </section>
 
-        <!-- 2. PORTFOLIO/GALLERY PREVIEW -->
+        <!-- 2. PORTFOLIO CAROUSEL PREVIEW -->
         <section id="portfolio" class="section">
             <div class="container" data-aos="fade-up">
                 <header class="section__header">
                     <h2 class="section__title">Nuestras Transformaciones</h2>
-                    <p class="section__subtitle">Resultados reales que hablan por sí mismos. Explora nuestra galería de antes y después.</p>
+                    <p class="section__subtitle">Resultados reales que hablan por sí mismos. Explora nuestra galería.</p>
                 </header>
-                <div id="portfolio-gallery-container" class="portfolio-grid"></div>
+                <!-- Contenedor del Carrusel de Portafolio -->
+                <div class="swiper-container portfolio-carousel">
+                    <div class="swiper-wrapper" id="portfolio-carousel-wrapper"></div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
                 <div class="section__footer">
                     <a href="portfolio.html" class="btn btn-secondary">Ver Galería Completa</a>
                 </div>
@@ -97,14 +108,22 @@
             </div>
         </section>
 
-        <!-- 4. BLOG PREVIEW -->
+        <!-- 4. BLOG CAROUSEL PREVIEW -->
         <section id="blog-preview" class="section">
             <div class="container" data-aos="fade-up">
                  <header class="section__header">
                     <h2 class="section__title">Consejos de Belleza</h2>
-                    <p class="section__subtitle">Cuidados post-tratamiento, tendencias y todo lo que necesitas saber sobre el mundo del microblading.</p>
+                    <p class="section__subtitle">Cuidados, tendencias y todo lo que necesitas saber sobre microblading.</p>
                 </header>
-                <div id="blog-posts-container" class="blog-grid"></div>
+                <!-- Contenedor del Carrusel de Blog -->
+                <div class="swiper-container blog-carousel">
+                    <div class="swiper-wrapper" id="blog-carousel-wrapper"></div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
                 <div class="section__footer">
                     <a href="blog.html" class="btn btn-secondary">Leer Todos los Artículos</a>
                 </div>
@@ -182,8 +201,12 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <!-- Swiper.js JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/auth.js" defer></script>
+    <script src="js/auth.js" type="module" defer></script>
+    <!-- Nuevo script para la lógica de la página de inicio -->
+    <script src="js/home.js" type="module" defer></script>
 
 </body>
 </html>

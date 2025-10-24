@@ -1,5 +1,8 @@
 ## ✅ REALIZADOS
 
+### Tareas Críticas Resueltas
+- **API Portafolio (Detalle):** Corregido el endpoint `/api/portafolio/items_portafolio/{id}/` en el backend. El frontend (`project-detail.js`) se ha conectado exitosamente, eliminando la necesidad de código de simulación y mostrando datos reales.
+
 ### Funcionalidades Implementadas
 - **Aplicaciones Core:** Usuarios, Portafolio y Blog.
 - **Frontend:** Landing Page, Blog (creación y visualización), Autenticación (Login/Modales).
@@ -8,20 +11,26 @@
 
 ### Refactorización "LuxeConvert" (Finalizada)
 - **Objetivo:** Unificar la estética del sitio bajo un sistema de diseño premium, consistente y con modo oscuro.
-- **Sistema de Diseño:** Se implementó un sistema de diseño global en `style.css` usando variables CSS.
-- **Componentes:** Se rediseñaron las tarjetas de portafolio, la vista de detalle de proyecto y la vista de detalle del blog.
-- **Conexión API:** Se reconectó el listado del portafolio al endpoint real del backend.
-- **Ajustes Finales:**
-    - **Tema Oscuro:** Corregido el conflicto que impedía el cambio de tema.
-    - **Footer:** Corregidos los colores del footer en el tema claro.
-    - **Formulario:** Ajustado el espaciado del botón de suscripción.
+- **Componentes y Estilos:** Se implementó un sistema de diseño global, se rediseñaron componentes clave y se corrigieron errores visuales en temas y espaciado.
+
+### Depuración y Estabilización de la Página de Inicio (Finalizada)
+- **Objetivo:** Solucionar todos los errores funcionales y visuales en los carruseles de la página de inicio.
+- **Corrección de Carruseles:** Solucionado el conflicto de contenido duplicado, aislando los controles de cada carrusel.
+- **Solución de Carga de Imágenes (CORS):** Resuelto el problema de CORS que impedía la visualización de las imágenes del portafolio.
+- **Limpieza de Código:** Eliminados todos los logs de depuración y advertencias de la consola.
+
+### Mejoras de UX/UI en Carruseles (Página de Inicio)
+- **Corrección de Navegación:** Se invirtió la lógica de las flechas de navegación para que apunten en la dirección correcta del desplazamiento.
+- **Controles de Navegación Ocultos:** Los botones de navegación ahora aparecen únicamente cuando el usuario pasa el cursor sobre el carrusel, limpiando la interfaz.
+- **Limitación Visual de Slides:** Se implementó un recorte visual (`overflow: hidden`) y un efecto de desvanecimiento en los bordes para mostrar claramente 3 diapositivas y evitar la saturación visual, manteniendo el desplazamiento de todo el contenido.
+
+### Mejoras de Arquitectura y Calidad (Frontend)
+- **Centralizar Acceso a API:** Se ha utilizado el módulo de servicio `client/js/apiService.js` para centralizar todas las llamadas `fetch` al backend, mejorando la mantenibilidad.
+- **Gestión de Estados de UI (Básica):** Implementado un sistema visual de mensajes de error en la página de inicio para cuando la API no responde, mejorando la experiencia de usuario (UX).
 
 ---
 
 ## ⏳ PENDIENTES
-
-### Tareas Críticas
-- **API Portafolio (Detalle):** El endpoint `/api/portafolio/items_portafolio/{id}/` sigue devolviendo 404. Es necesario que el backend corrija esto para poder eliminar el código de simulación (mock) en `client/js/project-detail.js`.
 
 ### Próximos Módulos (Features)
 - **Dashboard de Usuario:** Desarrollar la sección privada para usuarios.
@@ -29,9 +38,13 @@
 - **Redes Sociales:** Integrar APIs o feeds de redes sociales.
 - **Panel de Administración:** Desarrollar la interfaz para la gestión de contenido.
 
-### Mejoras de Arquitectura y Calidad (Frontend)
-- **Centralizar Acceso a API:** Crear un módulo de servicio (`client/js/apiService.js`) para centralizar todas las llamadas `fetch` al backend. Esto mejorará la mantenibilidad y reducirá la duplicación de código.
-- **Gestión de Estados de UI:** Implementar un sistema visual para los estados de carga (spinners, skeletons) y error (mensajes amigables) en las interacciones con la API para mejorar la experiencia de usuario (UX).
+### Mejoras de Funcionalidad
+- **Backend - Mejorar `ComentarioSerializer`**: 
+  - **Archivo**: `blog/serializers.py`
+  - **Tarea**: Añadir el nombre de usuario del autor de cada comentario a la respuesta de la API para mostrarlo en el frontend.
+- **Frontend - Actualizar `post-detail.js`**:
+  - **Archivo**: `client/js/post-detail.js`
+  - **Tarea**: Usar el campo `usuario_fk_username` (cuando esté disponible desde el backend) para mostrar el nombre del autor del comentario en lugar de "Anónimo".
 
 ### Calidad y Pruebas
 - **Pruebas de Seguridad:** Realizar auditorías de seguridad en todas las aplicaciones del backend.
