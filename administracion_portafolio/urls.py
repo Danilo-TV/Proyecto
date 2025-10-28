@@ -26,6 +26,7 @@ urlpatterns = [
     path('portafolio/', include('portafolio.urls')),  # Incluir las URLs de la app 'portafolio'
     path('auth/', include('users.urls')),  # Incluir las URLs de la app 'auth'
     path('api-auth/', include('rest_framework.urls')),  # Añadir las URLs de autenticación de DRF
+    path('e_commerce/', include('e_commerce.urls')),  # Incluir las URLs de la app 'e_commerce'
 ]
 
 if settings.DEBUG:
