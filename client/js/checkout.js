@@ -1,79 +1,107 @@
+import { CartService } from './services/cartService.js';
+import { api } from './apiService.js'; // Importamos la instancia de apiService
+
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Selectores del DOM ---
+    const summaryItemsContainerEl = document.getElementById('summary-items-container');
+    const summarySubtotalEl = document.getElementById('summary-subtotal');
+    const summaryDiscountEl = document.getElementById('summary-discount');
+    const summaryTotalEl = document.getElementById('summary-total');
+    const checkoutForm = document.getElementById('checkout-form');
+    const checkoutButton = document.getElementById('checkout-button');
+    const formStatusEl = document.getElementById('form-status');
 
-    // ===================================================================
-    // DATOS DE EJEMPLO (REUTILIZADOS)
-    // ===================================================================
-    const projectsData = [
-        { id: 1, titulo: "Plataforma de E-learning Interactiva", imagen_principal: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=100&auto=format&fit=crop", precio: "4,999" },
-        { id: 2, titulo: "Dashboard de Análisis de Datos", imagen_principal: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=100&auto=format&fit=crop", precio: "3,500" },
-        { id: 4, titulo: "Sitio Web E-commerce de Moda", imagen_principal: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=100&auto=format&fit=crop", precio: "5,500" },
-        // Los datos deben ser consistentes a través de los archivos JS.
-    ];
+    const formatCurrency = (amount) => `€${amount.toFixed(2)}`;
 
-    const summaryContainer = document.getElementById('summary-container');
-    const paymentForm = document.getElementById('payment-form');
-    const checkoutFormContainer = document.querySelector('.checkout-form');
+    function renderCheckoutSummary() {
+        const cartItems = CartService.getCart();
 
-    function renderOrderSummary() {
-        if (!summaryContainer) return;
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const projectId = parseInt(urlParams.get('projectId'));
-        const project = projectsData.find(p => p.id === projectId);
-
-        if (!project) {
-            summaryContainer.innerHTML = '<p>No se pudo cargar el resumen de tu pedido.</p>';
+        if (cartItems.length === 0) {
+            // Si el carrito está vacío, redirigir al usuario al carrito para ver el mensaje de "vacío".
+            window.location.href = '/cart.html';
             return;
         }
 
-        const subtotal = parseFloat(project.precio.replace(',', ''));
-        const tax = subtotal * 0.10; // 10% de impuestos
-        const total = subtotal + tax;
+        if (summaryItemsContainerEl) summaryItemsContainerEl.innerHTML = '';
 
-        const summaryHTML = `
-            <div class="summary-item">
-                <img src="${project.imagen_principal}" alt="${project.titulo}" class="summary-item-image">
-                <div class="summary-item-info">
-                    <h3>${project.titulo}</h3>
-                    <p>$${project.precio}</p>
-                </div>
-            </div>
-            <div class="summary-total">
-                 <div class="total-row">
-                    <span>Total</span>
-                    <span>$${total.toFixed(2)}</span>
-                </div>
-            </div>
-        `;
-
-        summaryContainer.innerHTML = summaryHTML;
-    }
-
-    function handlePaymentSimulation() {
-        if (!paymentForm || !checkoutFormContainer) return;
-
-        paymentForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevenimos el envío real del formulario
-
-            // Creamos el mensaje de confirmación
-            const confirmationHTML = `
-                <div class="confirmation-message" style="display: block;" data-aos="zoom-in">
-                    <i class="fas fa-check-circle"></i>
-                    <h2>¡Gracias por tu compra!</h2>
-                    <p>Hemos recibido tu pedido y pronto nos pondremos en contacto contigo para discutir los siguientes pasos.</p>
-                    <a href="index.html" class="cta-button">Volver al Inicio</a>
-                </div>
+        cartItems.forEach(item => {
+            const price = parseFloat(String(item.precio).replace(/[^0-9.-]+/g, ""));
+            const itemEl = document.createElement('div');
+            itemEl.className = 'summary-item';
+            itemEl.innerHTML = `
+                <span class="summary-item__title">${item.titulo} (x${item.quantity})</span>
+                <span class="summary-item__price">${formatCurrency(price * item.quantity)}</span>
             `;
-
-            // Reemplazamos el formulario con el mensaje
-            checkoutFormContainer.innerHTML = confirmationHTML;
-
-            // Disparar animación de AOS para el nuevo contenido
-            AOS.refresh(); 
+            if (summaryItemsContainerEl) summaryItemsContainerEl.appendChild(itemEl);
         });
+
+        const { subtotal, discount, total } = CartService.getTotals(cartItems);
+        if (summarySubtotalEl) summarySubtotalEl.textContent = formatCurrency(subtotal);
+        if (summaryDiscountEl) summaryDiscountEl.textContent = `-${formatCurrency(discount)}`;
+        if (summaryTotalEl) summaryTotalEl.textContent = formatCurrency(total);
     }
 
-    renderOrderSummary();
-    handlePaymentSimulation();
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        if (checkoutButton) {
+            checkoutButton.disabled = true;
+            checkoutButton.innerHTML = '<span class="spinner-sm"></span> Procesando...';
+        }
+        if (formStatusEl) formStatusEl.style.display = 'none';
 
+        const formData = new FormData(checkoutForm);
+        const cartItems = CartService.getCart();
+        const { total } = CartService.getTotals(cartItems);
+
+        const orderPayload = {
+            cliente_nombre: formData.get('name'),
+            cliente_email: formData.get('email'),
+            // En un caso real, aquí iría el token de pago seguro (ej. de Stripe), no los datos de la tarjeta.
+            // Esto es solo una simulación para el flujo.
+            detalles_pago: {
+                cardNumber: formData.get('card-number'), // NO HACER EN PRODUCCIÓN
+                expiryDate: formData.get('expiry-date'), // NO HACER EN PRODUCCIÓN
+                cvc: formData.get('cvc'),                // NO HACER EN PRODUCCIÓN
+            },
+            items: cartItems.map(item => ({
+                producto_id: item.id,
+                cantidad: item.quantity,
+                precio_unitario: parseFloat(String(item.precio).replace(/[^0-9.-]+/g, ""))
+            })),
+            monto_total: total
+        };
+
+        try {
+            // Usamos el apiService para llamar al endpoint de la API
+            const response = await api.post('/api/ecommerce/crear-pedido/', orderPayload);
+            
+            if (response && (response.status === 201 || response.status === 200)) {
+                // Éxito
+                CartService.clearCart();
+                // Guardar ID de pedido para mostrarlo en la página de confirmación
+                localStorage.setItem('LuxeOrderConfirmationId', response.data.pedido_id);
+                window.location.href = '/confirmation.html'; 
+            } else {
+                throw new Error(response.data.error || 'El servidor devolvió una respuesta inesperada.');
+            }
+
+        } catch (error) {
+            console.error("Error al crear el pedido:", error);
+            if (formStatusEl) {
+                formStatusEl.textContent = `Error: ${error.message || 'No se pudo procesar el pedido. Por favor, intente de nuevo.'}`;
+                formStatusEl.style.display = 'block';
+            }
+            if (checkoutButton) {
+                checkoutButton.disabled = false;
+                checkoutButton.textContent = 'Confirmar y Pagar';
+            }
+        }
+    }
+
+    // --- Inicialización ---
+    renderCheckoutSummary();
+
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', handleFormSubmit);
+    }
 });

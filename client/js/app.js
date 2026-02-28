@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+import { CartService } from './services/cartService.js';
 
-    const API_BASE_URL = 'http://127.0.0.1:8000/api';
+document.addEventListener('DOMContentLoaded', () => {
 
     // =========================================================================
     // 1. MANEJO DEL PRELOADER
@@ -24,14 +24,37 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 const placeholder = document.getElementById(placeholderId);
-                if (placeholder) {
-                    placeholder.innerHTML = data;
-                }
+                if (placeholder) placeholder.innerHTML = data;
             });
     };
 
     // =========================================================================
-    // 3. LÓGICA DE MENÚ DE USUARIO Y CAMBIO DE TEMA (RESTAURADA)
+    // 3. LÓGICA DEL ICONO DE CARRITO (NUEVO)
+    // =========================================================================
+    function initializeCartIcon() {
+        const cartCountBadge = document.getElementById('cart-item-count');
+
+        function updateCartIcon() {
+            if (!cartCountBadge) return;
+            const totalItems = CartService.getTotalItems();
+            cartCountBadge.textContent = totalItems;
+
+            if (totalItems > 0) {
+                cartCountBadge.classList.add('visible');
+            } else {
+                cartCountBadge.classList.remove('visible');
+            }
+        }
+
+        // Actualizar al cargar la página
+        updateCartIcon();
+
+        // Escuchar cambios en el carrito en toda la aplicación
+        window.addEventListener('cartUpdated', updateCartIcon);
+    }
+
+    // =========================================================================
+    // 4. LÓGICA DE MENÚ DE USUARIO Y CAMBIO DE TEMA
     // =========================================================================
     function initializeUserMenuAndTheme() {
         const loggedOutMenu = document.getElementById('logged-out-menu');
@@ -41,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const logoutButton = document.getElementById('logout-button');
         const usernameDisplay = document.querySelector('#logged-in-menu .username-display');
         const usernameDropdownDisplay = document.getElementById('username-dropdown-display');
-        const themeToggles = Array.from(document.querySelectorAll('.theme-toggle'));
+        const themeToggle = document.getElementById('theme-toggle');
 
         const checkLoginState = () => {
             const token = localStorage.getItem('authToken');
@@ -83,18 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const applyTheme = (theme) => {
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
-            themeToggles.forEach(toggle => {
-                if (toggle) toggle.checked = (theme === 'dark');
-            });
+            if(themeToggle) themeToggle.checked = (theme === 'dark');
         };
 
-        themeToggles.forEach(toggle => {
-            if (toggle) {
-                toggle.addEventListener('change', (e) => {
-                    applyTheme(e.target.checked ? 'dark' : 'light');
-                });
-            }
-        });
+        if (themeToggle) {
+            themeToggle.addEventListener('change', (e) => {
+                applyTheme(e.target.checked ? 'dark' : 'light');
+            });
+        }
 
         checkLoginState();
         const savedTheme = localStorage.getItem('theme') || 'light';
@@ -102,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    // 4. LÓGICA DE MODALES DE AUTENTICACIÓN (RESTAURADA)
+    // 5. LÓGICA DE MODALES DE AUTENTICACIÓN
     // =========================================================================
     function initializeAuthModals() {
         const loginModal = document.getElementById('login-modal');
@@ -121,72 +140,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if(loginBtn) loginBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(loginModal); });
         if(registerBtn) registerBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(registerModal); });
 
-        closeButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                closeModal(loginModal);
-                closeModal(registerModal);
-            });
-        });
-
+        closeButtons.forEach(btn => btn.addEventListener('click', () => { closeModal(loginModal); closeModal(registerModal); }));
         window.addEventListener('click', (e) => {
             if (e.target === loginModal) closeModal(loginModal);
             if (e.target === registerModal) closeModal(registerModal);
         });
 
-        if(switchToRegister) switchToRegister.addEventListener('click', (e) => { 
-            e.preventDefault(); 
-            closeModal(loginModal); 
-            openModal(registerModal); 
-        });
-
-        if(switchToLogin) switchToLogin.addEventListener('click', (e) => { 
-            e.preventDefault(); 
-            closeModal(registerModal); 
-            openModal(loginModal); 
-        });
+        if(switchToRegister) switchToRegister.addEventListener('click', (e) => { e.preventDefault(); closeModal(loginModal); openModal(registerModal); });
+        if(switchToLogin) switchToLogin.addEventListener('click', (e) => { e.preventDefault(); closeModal(registerModal); openModal(loginModal); });
     }
 
     // =========================================================================
-    // 5. LÓGICA DEL FORMULARIO DE NEWSLETTER
-    // =========================================================================
-    function initializeNewsletterForm() {
-        // Lógica del newsletter (si existe) va aquí
-    }
-
-    // =========================================================================
-    // 6. LÓGICA DEL ACORDEÓN DE FAQ (NUEVA)
+    // 6. OTRAS INICIALIZACIONES (FAQ, etc.)
     // =========================================================================
     function initializeFaqAccordion() {
         const faqContainer = document.getElementById('faq-accordion');
         if (!faqContainer) return;
-
-        const faqItems = faqContainer.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            if (question) {
-                question.addEventListener('click', () => {
-                    const wasActive = item.classList.contains('active');
-                    faqItems.forEach(otherItem => {
-                        otherItem.classList.remove('active');
-                    });
-                    if (!wasActive) {
-                        item.classList.add('active');
-                    }
-                });
-            }
+        faqContainer.addEventListener('click', e => {
+            const question = e.target.closest('.faq-question');
+            if(!question) return;
+            const item = question.parentElement;
+            const wasActive = item.classList.contains('active');
+            faqContainer.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if(!wasActive) item.classList.add('active');
         });
     }
 
     // =========================================================================
-    // 7. CARGA DE CONTENIDO CONDICIONAL
-    // =========================================================================
-    function loadPageSpecificContent() {
-        // Lógica para cargar contenido específico de la página va aquí
-    }
-
-    // =========================================================================
-    // 8. SECUENCIA DE INICIALIZACIÓN PRINCIPAL (CORREGIDA Y COMPLETA)
+    // 7. SECUENCIA DE INICIALIZACIÓN PRINCIPAL
     // =========================================================================
     const initComponents = async () => {
         try {
@@ -197,11 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ]);
 
             // Inicializar todos los componentes después de que el HTML base esté cargado.
+            initializeCartIcon(); // <-- NUEVA LÓGICA DEL CARRITO
             initializeUserMenuAndTheme();
             initializeAuthModals();
-            initializeNewsletterForm();
             initializeFaqAccordion();
-            loadPageSpecificContent();
 
             if (typeof AOS !== 'undefined') {
                 AOS.init({ duration: 800, once: true, delay: 100 });

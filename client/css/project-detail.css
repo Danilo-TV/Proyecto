@@ -18,31 +18,21 @@
 .project-header {
     text-align: center;
     padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-color);
     margin-bottom: 3rem;
 }
 
-[data-theme="dark"] .project-header {
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-
 .project-title {
-    font-size: 2.8rem;
+    font-family: var(--font-primary);
+    font-size: 3.2rem;
     font-weight: 700;
-    color: var(--text-color);
+    color: var(--headline-color);
     line-height: 1.2;
-    margin-bottom: 0.75rem;
-}
-
-.project-meta {
-    font-size: 1rem;
-    color: var(--text-color);
-    opacity: 0.7;
 }
 
 /* GALERÍA DE IMÁGENES */
 .project-gallery {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .image-comparison-container {
@@ -55,7 +45,8 @@
     background-color: var(--card-bg-color);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
 }
 
 .image-container img {
@@ -67,97 +58,102 @@
 .image-label {
     text-align: center;
     padding: 1rem;
+    font-family: var(--font-secondary);
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem;
     background-color: var(--card-bg-color);
-    color: var(--text-color);
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--text-light);
+    border-top: 1px solid var(--border-color);
 }
 
-[data-theme="dark"] .image-label {
-    border-top-color: rgba(255, 255, 255, 0.05);
-}
-
-/* CONTENIDO PRINCIPAL Y TARJETA CTA */
+/* CONTENIDO PRINCIPAL: GRID DE 2 COLUMNAS */
 .project-main-content {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 3rem;
+    gap: 4rem;
     align-items: flex-start;
 }
 
-.section-subtitle {
-    font-size: 1.8rem;
-    font-weight: 600;
+.section__subtitle {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    font-weight: 700;
     margin-bottom: 1.5rem;
-    color: var(--text-color);
+    color: var(--headline-color);
 }
 
 .project-description-text {
     font-size: 1.1rem;
     line-height: 1.8;
     color: var(--text-color);
-    opacity: 0.9;
 }
 
-.project-cta-card {
+/* TARJETA DE DETALLES DEL PROYECTO */
+.project-details-card {
     background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
     position: sticky;
     top: 120px; /* Offset for the nav bar */
 }
 
-.project-cta-card h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--text-color);
+.details-card__title {
+    font-family: var(--font-primary);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--headline-color);
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
 }
 
-.project-cta-card p {
-    font-size: 1rem;
-    line-height: 1.6;
+.details-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.details-card__list li {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
     margin-bottom: 1.5rem;
-    color: var(--text-color);
-    opacity: 0.8;
+    font-size: 1rem;
 }
 
-.cta-button-container .cta-button {
-    width: 100%;
-    text-align: center;
-}
-
-.trust-elements {
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    opacity: 0.7;
-}
-
-.trust-elements span {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.trust-elements i {
-    margin-right: 0.75rem;
+.details-card__list li i {
+    font-size: 1.2rem;
     color: var(--primary-color);
-    width: 20px;
+    width: 25px;
     text-align: center;
+}
+
+.details-card__list li strong {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.details-card__list li span {
+    color: var(--text-light);
+}
+
+.cta-button-container {
+    margin-top: 2rem;
 }
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 992px) {
     .project-main-content {
         grid-template-columns: 1fr; /* Stack on smaller screens */
+        gap: 3rem;
     }
 }
 
 @media (max-width: 768px) {
     .project-title {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
 
     .image-comparison-container {

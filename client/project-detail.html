@@ -41,7 +41,6 @@
     <template id="project-detail-template">
         <header class="project-header" data-aos="fade-in">
             <h1 id="project-title" class="project-title"></h1>
-            <p id="project-date" class="project-meta"></p>
         </header>
 
         <section class="project-gallery" data-aos="fade-up">
@@ -57,22 +56,42 @@
             </div>
         </section>
 
+        <!-- **NUEVA ESTRUCTURA DE DOS COLUMNAS** -->
         <div class="project-main-content" data-aos="fade-up" data-aos-delay="100">
+            
+            <!-- Columna Izquierda: Descripción -->
             <div class="project-description-wrapper">
                 <h2 class="section__subtitle">Sobre esta Transformación</h2>
                 <p id="project-description" class="project-description-text"></p>
             </div>
 
-            <aside class="project-cta-card">
-                <h3>¿Interesada en un resultado similar?</h3>
-                <p>Nuestras artistas certificadas pueden diseñar las cejas perfectas para ti. Agenda una consulta gratuita.</p>
+            <!-- Columna Derecha: Tarjeta de Detalles -->
+            <aside class="project-details-card">
+                <h3 class="details-card__title">Detalles del Proyecto</h3>
+                <ul class="details-card__list">
+                    <li>
+                        <i class="fas fa-user"></i>
+                        <strong>Cliente:</strong>
+                        <span id="project-client"></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-calendar-alt"></i>
+                        <strong>Fecha:</strong>
+                        <span id="project-date"></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-briefcase"></i>
+                        <strong>Servicios:</strong>
+                        <span id="project-services"></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <strong>Duración:</strong>
+                        <span id="project-duration"></span>
+                    </li>
+                </ul>
                 <div class="cta-button-container">
                      <a href="index.html#contact" class="btn btn-primary btn-lg">Agendar Consulta</a>
-                </div>
-                <div class="trust-elements">
-                    <span><i class="fas fa-check-circle"></i> Calidad Garantizada</span>
-                    <span><i class="fas fa-medal"></i> Artistas Certificadas</span>
-                    <span><i class="fas fa-star"></i> Clientas Satisfechas</span>
                 </div>
             </aside>
         </div>

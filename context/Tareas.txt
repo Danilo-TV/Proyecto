@@ -27,6 +27,36 @@
 ### Mejoras de Arquitectura y Calidad (Frontend)
 - **Centralizar Acceso a API:** Se ha utilizado el módulo de servicio `client/js/apiService.js` para centralizar todas las llamadas `fetch` al backend, mejorando la mantenibilidad.
 - **Gestión de Estados de UI (Básica):** Implementado un sistema visual de mensajes de error en la página de inicio para cuando la API no responde, mejorando la experiencia de usuario (UX).
+- **Enriquecimiento de la Página de Detalle del Portafolio:**
+  - **Objetivo:** Actualizar la página `project-detail.html` para consumir y mostrar datos adicionales de la API, enriqueciendo la información del proyecto.
+  - **Implementación:** 
+    - Se ha rediseñado el layout para incluir una tarjeta de "Detalles del Proyecto" junto a la descripción.
+    - Se ha actualizado el script `project-detail.js` para obtener y renderizar los nuevos campos: `cliente`, `fecha_realizacion`, `servicios_realizados` y `duracion_tratamiento`.
+    - Se han añadido los estilos CSS correspondientes en `project-detail.css` para asegurar una integración visual perfecta con el diseño "LuxeConvert".
+
+### Funcionalidad de Comentarios del Blog (Finalizada)
+- **Objetivo:** Mostrar el nombre de usuario del autor de cada comentario en la página de detalle del post.
+- **Implementación:**
+  - **Backend:** Se ha mejorado el `ComentarioSerializer` para incluir el nombre de usuario (`usuario_fk_username`) en la respuesta de la API.
+  - **Frontend:** Se ha actualizado el script `client/js/post-detail.js` para consumir el nuevo campo, mostrando el nombre del autor en lugar de "Anónimo" y manteniendo un fallback para garantizar la robustez.
+
+### ✔️ Flujo de E-commerce (Compra de Servicios) - Finalizado
+- **Objetivo General:** Implementar un ciclo de compra completo y profesional para los servicios ofrecidos en el portafolio.
+- **Estado:** Completado.
+
+1.  **Funcionalidad "Añadir al Carrito":**
+    - Se ha refactorizado `portfolio.js` para añadir un botón "Añadir al Carrito" funcional a cada servicio.
+    - Se creó el `CartService.js`, un servicio centralizado para manejar el estado del carrito (`localStorage`) y notificar a la aplicación de cambios mediante un evento global (`cartUpdated`).
+
+2.  **Mejora de UX: Icono de Carrito Dinámico:**
+    - Se añadió un icono de carrito a la barra de navegación (`_nav.html`).
+    - `app.js` ahora escucha el evento `cartUpdated` para actualizar un contador numérico sobre el icono en tiempo real, proporcionando feedback constante al usuario en todo el sitio.
+    - Se añadieron estilos CSS para el contador (`badge`) en `style.css`.
+
+3.  **Página del Carrito y Venta Cruzada (Cross-selling):**
+    - Se implementó la lógica en `cart.js` para renderizar los artículos del carrito.
+    - Se añadió una sección de "venta cruzada" que sugiere inteligentemente otros servicios que el usuario no tiene en su carrito para aumentar el valor del pedido.
+    - Se implementó la funcionalidad para añadir, eliminar y actualizar la cantidad de artículos directamente desde esta página.
 
 ---
 
@@ -34,17 +64,13 @@
 
 ### Próximos Módulos (Features)
 - **Dashboard de Usuario:** Desarrollar la sección privada para usuarios.
-- **E-commerce:** Implementar el carrito de compras y el proceso de checkout.
 - **Redes Sociales:** Integrar APIs o feeds de redes sociales.
 - **Panel de Administración:** Desarrollar la interfaz para la gestión de contenido.
 
-### Mejoras de Funcionalidad
-- **Backend - Mejorar `ComentarioSerializer`**: 
-  - **Archivo**: `blog/serializers.py`
-  - **Tarea**: Añadir el nombre de usuario del autor de cada comentario a la respuesta de la API para mostrarlo en el frontend.
-- **Frontend - Actualizar `post-detail.js`**:
-  - **Archivo**: `client/js/post-detail.js`
-  - **Tarea**: Usar el campo `usuario_fk_username` (cuando esté disponible desde el backend) para mostrar el nombre del autor del comentario en lugar de "Anónimo".
+### 🚀 E-commerce - Fase 2: Funcionalidades de Gestión
+- **Integración de Pasarela de Pago Real:** Reemplazar el checkout simulado por una integración con Stripe o PayPal.
+- **Panel de Administración (Admin Dashboard):** Crear una interfaz para la gestión de productos, pedidos y clientes.
+- **Perfiles de Usuario:** Permitir a los usuarios ver su historial de compras.
 
 ### Calidad y Pruebas
 - **Pruebas de Seguridad:** Realizar auditorías de seguridad en todas las aplicaciones del backend.

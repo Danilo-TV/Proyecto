@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /**
-     * Renderiza los datos del proyecto usando el template y el modelo ItemPortafolio.
+     * Renderiza los datos del proyecto usando el template y el modelo ItemPortafolio actualizado.
      */
     const renderProject = (project) => {
         if (!template) {
@@ -38,17 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const clone = template.content.cloneNode(true);
 
-        // Poblar datos usando los nombres de campo del modelo ItemPortafolio
+        // Poblar datos generales
         clone.getElementById('project-title').textContent = project.titulo || 'Título no disponible';
-        clone.getElementById('project-date').textContent = `Realizado en: ${formatDate(project.fecha_trabajo)}`;
         clone.getElementById('project-description').innerHTML = project.descripcion ? project.descripcion.replace(/\n/g, '<br>') : 'Descripción no disponible.';
         clone.getElementById('project-img-antes').src = project.imagen_antes || '';
         clone.getElementById('project-img-despues').src = project.imagen_despues || '';
+
+        // **NUEVO: Poblar la tarjeta de detalles del proyecto**
+        clone.getElementById('project-client').textContent = project.cliente || 'No especificado';
+        clone.getElementById('project-date').textContent = formatDate(project.fecha_realizacion);
+        clone.getElementById('project-services').textContent = project.servicios_realizados || 'No especificado';
+        clone.getElementById('project-duration').textContent = project.duracion_tratamiento || 'No especificado';
 
         if (projectContainer) {
             projectContainer.innerHTML = ''; // Limpiar "cargando..."
             projectContainer.appendChild(clone);
 
+            // Refrescar AOS para que las animaciones se apliquen al nuevo contenido
             if (window.AOS) {
                 AOS.refresh();
             }

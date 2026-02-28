@@ -53,11 +53,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         comments.forEach(comment => {
             const commentDate = new Date(comment.fecha_comentario).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric'});
+            const authorName = comment.usuario_fk_username || comment.autor_username || 'Anónimo'; // **CAMBIO CLAVE: Prioriza el nuevo campo**
+            
             const li = document.createElement('li');
             li.className = 'comment-card-lux';
             li.innerHTML = `
                 <div class="comment-card-lux__header">
-                    <span class="comment-author-lux">${comment.autor_username || 'Anónimo'}</span>
+                    <span class="comment-author-lux">${authorName}</span>
                     <span class="comment-date-lux">${commentDate}</span>
                 </div>
                 <p class="comment-body-lux">${comment.cuerpo_comentario}</p>

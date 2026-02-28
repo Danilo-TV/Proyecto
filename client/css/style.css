@@ -29,6 +29,7 @@
     --shadow-md: 0 10px 20px rgba(0,0,0,0.07);
     --shadow-lg: 0 20px 40px rgba(0,0,0,0.1);
     --navbar-height: 90px;
+    --success-color: #28a745; /* Color para éxito (ej. añadir al carrito) */
 }
 
 [data-theme="dark"] {
@@ -83,12 +84,12 @@ a { color: var(--primary-color); text-decoration: none; }
     padding: 6rem 0;
     overflow: hidden;
     border-top: 1px solid var(--border-color);
-    background-color: var(--background-color); /* Base oscura por defecto */
+    background-color: var(--background-color); 
 }
 .section:first-child { border-top: none; } 
 
 .section--shaded {
-    background-color: var(--card-bg-color); /* Tono más claro para intercalar */
+    background-color: var(--card-bg-color);
 }
 
 .section__header { text-align: center; margin-bottom: 4rem; }
@@ -120,25 +121,34 @@ a { color: var(--primary-color); text-decoration: none; }
 
 /* ==================== PORTFOLIO & BLOG PREVIEW ==================== */
 .portfolio-grid, .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
-.portfolio-card { position: relative; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); transition: transform 0.3s, box-shadow 0.3s; }
-.portfolio-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-.portfolio-card__image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-.portfolio-card:hover .portfolio-card__image { transform: scale(1.05); }
-.portfolio-card__overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: var(--white); }
-.portfolio-card__title { font-family: var(--font-primary); font-size: 1.5rem; margin: 0; }
-.portfolio-card__category { margin: 0; opacity: 0.9; }
-
 .blog-card { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
 .blog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-.blog-card__image-container { display: block; height: 220px; overflow: hidden; }
-.blog-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-.blog-card:hover img { transform: scale(1.05); }
-.blog-card__content { padding: 1.75rem; display: flex; flex-direction: column; flex-grow: 1; }
-.blog-card__meta { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.75rem; }
-.blog-card__title { font-family: var(--font-primary); font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--headline-color); }
-.blog-card__excerpt { color: var(--text-light); flex-grow: 1; margin-bottom: 1.5rem; }
-.blog-card__footer { margin-top: auto; }
-.btn-text { font-weight: 700; color: var(--primary-color); }
+.blog-card-image { display: block; height: 220px; object-fit: cover; }
+.blog-card:hover .blog-card-image { transform: scale(1.05); transition: transform 0.4s ease; }
+.blog-card-content { padding: 1.75rem; display: flex; flex-direction: column; flex-grow: 1; }
+.blog-card h3 { font-family: var(--font-primary); font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--headline-color); }
+.post-excerpt { color: var(--text-light); flex-grow: 1; margin-bottom: 1.5rem; }
+.read-more-btn { font-weight: 700; color: var(--primary-color); }
+
+/* --- Card Actions Footer (para Portafolio) --- */
+.card-actions-footer { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 1.5rem; 
+    padding-top: 1rem; 
+    border-top: 1px solid var(--border-color); 
+}
+.item-price { 
+    font-family: var(--font-primary); 
+    font-size: 1.4rem; 
+    font-weight: 700; 
+    color: var(--headline-color); 
+}
+.btn-add-to-cart { 
+    font-size: 0.9rem; 
+    padding: 0.7rem 1.5rem; 
+}
 
 /* ==================== TESTIMONIALS SECTION ==================== */
 .testimonial-card { background-color: var(--background-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; max-width: 750px; margin: 0 auto; box-shadow: var(--shadow-md); position: relative; text-align: center; }
@@ -150,14 +160,14 @@ a { color: var(--primary-color); text-decoration: none; }
 .testimonial-card__name { font-weight: 700; display: block; color: var(--headline-color); }
 .testimonial-card__title { font-size: 0.95rem; color: var(--text-light); }
 
-/* ==================== FAQ SECTION (REVISED) ==================== */
+/* ==================== FAQ SECTION ==================== */
 .faq-container { max-width: 850px; margin: 0 auto; }
 .faq-item { border-bottom: 1px solid var(--border-color); }
 .faq-item:last-child { border-bottom: none; }
 .faq-question { width: 100%; background: none; border: none; text-align: left; padding: 1.75rem 1rem 1.75rem 0; font-family: var(--font-primary); font-size: 1.3rem; font-weight: 600; color: var(--headline-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 .faq-question i { font-size: 1rem; color: var(--primary-color); transition: transform 0.3s ease-in-out; }
 .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
-.faq-item.active .faq-answer { max-height: 300px; /* Suficiente para la mayoría de respuestas */ }
+.faq-item.active .faq-answer { max-height: 300px; }
 .faq-answer p { padding: 0 1rem 1.5rem 0; color: var(--text-light); line-height: 1.8; }
 .faq-item.active .faq-question i { transform: rotate(180deg); }
 
@@ -175,46 +185,35 @@ a { color: var(--primary-color); text-decoration: none; }
 .social-icons a:hover { transform: scale(1.2); color: var(--primary-color); }
 .footer-bottom { border-top: 1px solid #333; padding: 2rem 0; text-align: center; font-size: 0.9rem; color: #6c757d; }
 
-/* ==================== CAROUSEL STYLES ==================== */
-@media (min-width: 1024px) {
-    .carousel-container {
-        position: relative;
-        overflow: hidden; 
-    }
-    /* Efecto de desvanecimiento en los bordes */
-    .carousel-container::before, .carousel-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100px; 
-        z-index: 10; 
-        pointer-events: none; 
-    }
-    .carousel-container::before {
-        left: 0;
-        background: linear-gradient(to right, var(--background-color), transparent);
-    }
-    .carousel-container::after {
-        right: 0;
-        background: linear-gradient(to left, var(--background-color), transparent);
-    }
-    [data-theme="dark"] .carousel-container::before {
-        background: linear-gradient(to right, var(--background-color), transparent);
-    }
-    [data-theme="dark"] .carousel-container::after {
-        background: linear-gradient(to left, var(--background-color), transparent);
-    }
+/* ==================== ÁREA DE MENÚ DE USUARIO Y CARRITO ==================== */
+.user-menu-area { display: flex; align-items: center; gap: 1.5rem; }
+.nav-action-item { position: relative; color: var(--text-color); font-size: 1.2rem; transition: color 0.3s; }
+.nav-action-item:hover { color: var(--primary-color); }
 
-    /* Botones de navegación aparecen al pasar el mouse */
-    .swiper-button-next, .swiper-button-prev {
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    .carousel-container:hover .swiper-button-next,
-    .carousel-container:hover .swiper-button-prev {
-        opacity: 1;
-    }
+.cart-item-count-badge { 
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    border: 2px solid var(--background-color);
+    transition: transform 0.2s, opacity 0.2s;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.cart-item-count-badge.visible { 
+    transform: scale(1);
+    opacity: 1;
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
