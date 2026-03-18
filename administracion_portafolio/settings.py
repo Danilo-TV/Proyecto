@@ -3,6 +3,9 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Bypasear la restricción estricta de django-ratelimit para desarrollo local
+SILENCED_SYSTEM_CHECKS = ['django_ratelimit.E003', 'django_ratelimit.W001']
+
 # --- CONFIGURACIÓN DE CACHÉ --- #
 CACHES = {
     "default": {
