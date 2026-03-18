@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'redes_sociales',
     'django_ratelimit',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
