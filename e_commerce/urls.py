@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CursoViewSet, CitaViewSet, VentaCursoViewSet
+from .views import CursoViewSet, CitaViewSet, VentaCursoViewSet, ServicioViewSet
 
 # 1. Inicializar el Router
 # El Router de DRF automáticamente genera las rutas CRUD para los ModelViewSet
@@ -11,6 +11,7 @@ router = DefaultRouter()
 router.register(r'cursos', CursoViewSet, basename='curso')
 router.register(r'citas', CitaViewSet, basename='cita')
 router.register(r'ventas_cursos', VentaCursoViewSet, basename='ventacurso')
+router.register(r'servicios', ServicioViewSet, basename='servicio')
 
 # 3. Definir los patrones de URL
 urlpatterns = [

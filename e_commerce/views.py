@@ -12,9 +12,8 @@ class CursoViewSet(viewsets.ModelViewSet):
     """
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
-    # Permiso: Lectura para anónimos; Escritura solo para autenticados.
-    # Esto asegura que cualquiera puede ver la oferta, pero solo el Admin puede cambiarla [1, 2].
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly] 
+    # Permiso: Según spec de seguridad, todas las vistas de e_commerce deben estar protegidas con IsAuthenticated.
+    permission_classes = [permissions.IsAuthenticated]
 
 # 2. NUEVO ViewSet para Servicios (Catálogo)
 
@@ -25,9 +24,8 @@ class ServicioViewSet(viewsets.ModelViewSet):
     """
     queryset = Servicio.objects.all()
     serializer_class = ServicioSerializer
-    # Utilizamos IsAuthenticatedOrReadOnly para el catálogo, 
-    # permitiendo la lectura pública de precios y descripciones [1-3].
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly] 
+    # Según especificaciones, el catálogo también requiere IsAuthenticated.
+    permission_classes = [permissions.IsAuthenticated]
 
 # 3. ViewSet para Citas (Transaccional - Seguridad Crítica)
 

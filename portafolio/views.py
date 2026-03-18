@@ -59,3 +59,7 @@ class ContactoPortafolioViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()] # Lectura solo para autenticados (Admin)
+
+    def perform_create(self, serializer):
+        from datetime import date
+        serializer.save(fecha_contacto=date.today())
