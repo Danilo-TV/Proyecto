@@ -72,6 +72,10 @@ class Cita(models.Model):
     
     estado_cita = models.CharField(max_length=50)
 
+    class Meta:
+        # Validación de unicidad requerida por la regla de negocio
+        unique_together = ('fecha_agendamiento', 'hora_agendamiento')
+
     def __str__(self):
         # La cadena ahora usa el nombre del servicio a través de la relación FK
         return f"Cita de {self.usuario_fk.username} para {self.servicio_fk.nombre_servicio} el {self.fecha_agendamiento} a las {self.hora_agendamiento}"

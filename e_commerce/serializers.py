@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 from .models import Curso, Cita, VentaCurso, Servicio # Importar el nuevo modelo Servicio
 from django.contrib.auth.models import User
 
@@ -52,6 +53,14 @@ class CitaSerializer(serializers.ModelSerializer):
         # Esto es crucial ya que CitaViewSet asigna el usuario automáticamente
         # en perform_create para prevenir el Control de Acceso Roto [7, 8].
         read_only_fields = ['usuario_fk']
+        
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Cita.objects.all(),
+                fields=['fecha_agendamiento', 'hora_agendamiento'],
+                message='Este horario ya se encuentra reservado. Por favor, selecciona otro horario.'
+            )
+        ]
         
 # 4. Serializer para el Modelo VentaCurso (Transaccional)
 class VentaCursoSerializer(serializers.ModelSerializer):
