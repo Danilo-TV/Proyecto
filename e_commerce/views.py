@@ -114,3 +114,120 @@ class VentaCursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = VentaCurso
         fields = ['curso_fk', 'usuario_fk', 'monto_pagado', 'fecha_compra']
+
+import requests
+import base64
+from django.conf import settings
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
+
+
+def get_paypal_access_token():
+    client_id = getattr(settings, 'PAYPAL_CLIENT_ID', '')
+    secret = getattr(settings, 'PAYPAL_SECRET', '')
+    
+    auth_string = f"{client_id}:{secret}"
+    auth_bytes = auth_string.encode("ascii")
+    auth_base64 = base64.b64encode(auth_bytes).decode("ascii")
+
+    headers = {
+        "Authorization": f"Basic {auth_base64}",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    data = {"grant_type": "client_credentials"}
+    
+    response = requests.post(
+        "https://api-m.sandbox.paypal.com/v1/oauth2/token",
+        headers=headers,
+        data=data
+    )
+    if response.status_code == 200:
+        return response.json().get("access_token")
+    return None
+
+
+class IniciarPagoPayPalView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        cita_id = request.data.get('cita_id')
+        cita = get_object_or_404(Cita, id=cita_id)
+        
+        access_token = get_paypal_access_token()
+        if not access_token:
+            return Response({"detail": "Error obteniendo token de PayPal"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+        
+        precio = str(cita.servicio_fk.precio_estimado)
+        
+        payload = {
+            "intent": "CAPTURE",
+            "purchase_units": [
+                {
+                    "amount": {
+                        "currency_code": "USD",
+                        "value": precio
+                    }
+                }
+            ]
+        }
+        
+        # Petición a PayPal para crear la orden
+        paypal_response = requests.post(
+            'https://api-m.sandbox.paypal.com/v2/checkout/orders',
+            headers=headers,
+            json=payload
+        )
+        
+        if paypal_response.status_code == 201:
+            data = paypal_response.json()
+            approval_url = None
+            for link in data.get('links', []):
+                if link.get('rel') == 'approve':
+                    approval_url = link.get('href')
+                    break
+            
+            if approval_url:
+                return Response({"approval_url": approval_url}, status=status.HTTP_200_OK)
+        
+        return Response({"detail": "Error al contactar a PayPal"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ConfirmarPagoPayPalView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        cita_id = request.data.get('cita_id')
+        token = request.data.get('token')
+        cita = get_object_or_404(Cita, id=cita_id)
+        
+        access_token = get_paypal_access_token()
+        if not access_token:
+            return Response({"detail": "Error obteniendo token de PayPal"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+        
+        # Validación de pago en PayPal
+        paypal_response = requests.post(
+            f'https://api-m.sandbox.paypal.com/v2/checkout/orders/{token}/capture',
+            headers=headers,
+            json={}
+        )
+        
+        if paypal_response.status_code == 201:
+            data = paypal_response.json()
+            if data.get("status") == "COMPLETED":
+                cita.estado_cita = 'Pagada'
+                cita.save()
+                return Response({"detail": "Pago confirmado y Cita actualizada"}, status=status.HTTP_200_OK)
+                
+        return Response({"detail": "Pago no pudo ser confirmado"}, status=status.HTTP_400_BAD_REQUEST)

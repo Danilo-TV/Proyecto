@@ -133,3 +133,8 @@ CORS_ALLOW_CREDENTIALS = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Variables de entorno para PayPal en settings.py
+PAYPAL_CLIENT_ID = "AU7fHmoocHaUTzsNbUE3dCnKFqSMtMTi2_eDlQw3kHyrub0XAYY3b0pbwEIzjMcnKQ9j6gGHTlz2VUPq"
+PAYPAL_SECRET = "EN3C5Bz_Gn9ABwhorEdz1yk9MGptlMlU3KdM2HK7v2c16xTBR3-or0YcA7wEX_L8rZjKkHXadJEjoVC-"
+PAYPAL_MODE = "sandbox"
