@@ -26,11 +26,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Create .env file
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> .env
+          echo "PAYPAL_SECRET=${{ secrets.PAYPAL_SECRET }}" >> .env
+          echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> .env
+
       - name: Ejecutar pruebas automatizadas
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
-          PAYPAL_SECRET: ${{ secrets.PAYPAL_SECRET }}
-          PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
         run: |
           pytest
