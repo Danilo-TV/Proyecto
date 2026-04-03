@@ -8,6 +8,21 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.throttling import AnonRateThrottle
 from .serializers import UserSerializer
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+@swagger_auto_schema(
+    method='post',
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        required=['username', 'password'],
+        properties={
+            'username': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre de usuario'),
+            'email': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL, description='Correo electrónico'),
+            'password': openapi.Schema(type=openapi.TYPE_STRING, description='Contraseña segura')
+        }
+    )
+)
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_view(request):

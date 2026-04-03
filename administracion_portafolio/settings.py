@@ -1,7 +1,10 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv()
 
 # Bypasear la restricción estricta de django-ratelimit para desarrollo local
 SILENCED_SYSTEM_CHECKS = ['django_ratelimit.E003', 'django_ratelimit.W001']
@@ -14,7 +17,7 @@ CACHES = {
     }
 }
 
-SECRET_KEY = 'django-insecure-6)w=nu4j5i!5vod3$gm%c-guwfkl2%s6eddmiq@1ue^+@)47*g'
+SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -135,6 +138,23 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Variables de entorno para PayPal en settings.py
-PAYPAL_CLIENT_ID = "AU7fHmoocHaUTzsNbUE3dCnKFqSMtMTi2_eDlQw3kHyrub0XAYY3b0pbwEIzjMcnKQ9j6gGHTlz2VUPq"
-PAYPAL_SECRET = "EN3C5Bz_Gn9ABwhorEdz1yk9MGptlMlU3KdM2HK7v2c16xTBR3-or0YcA7wEX_L8rZjKkHXadJEjoVC-"
-PAYPAL_MODE = "sandbox"
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID')
+PAYPAL_SECRET = os.getenv('PAYPAL_SECRET')
+PAYPAL_MODE = os.getenv('PAYPAL_MODE', 'sandbox')
+
+# Configuración de drf-yasg para soportar Tokens JWT (Bearer)
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    # ESTO ES LO NUEVO: Obliga a Swagger a enviar el token en las peticiones
+    'SECURITY_REQUIREMENTS': [{
+        'Bearer': []
+    }],
+    # Evita conflictos con las cookies de sesión del panel de administrador nativo de Django
+    'USE_SESSION_AUTH': False, 
+}

@@ -151,6 +151,18 @@ def get_paypal_access_token():
 class IniciarPagoPayPalView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    from drf_yasg.utils import swagger_auto_schema
+    from drf_yasg import openapi
+
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['cita_id'],
+            properties={
+                'cita_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID de la cita a pagar')
+            }
+        )
+    )
     def post(self, request):
         cita_id = request.data.get('cita_id')
         cita = get_object_or_404(Cita, id=cita_id)
@@ -202,6 +214,19 @@ class IniciarPagoPayPalView(APIView):
 class ConfirmarPagoPayPalView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    from drf_yasg.utils import swagger_auto_schema
+    from drf_yasg import openapi
+
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['cita_id', 'token'],
+            properties={
+                'cita_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID de la cita pagada'),
+                'token': openapi.Schema(type=openapi.TYPE_STRING, description='Token de aprobación de PayPal')
+            }
+        )
+    )
     def post(self, request):
         cita_id = request.data.get('cita_id')
         token = request.data.get('token')

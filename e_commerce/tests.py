@@ -173,6 +173,8 @@ class TestCitaViewSet:
         }
         response = auth_client.post(self.url, data, format='json')
         assert response.status_code == status.HTTP_201_CREATED
+        assert "id" in response.data
+        assert response.data["id"] is not None
         assert Cita.objects.count() == 1
         
     def test_seguridad_perform_create_broken_access_control(self, auth_client, client_user, admin_user, servicio_test):

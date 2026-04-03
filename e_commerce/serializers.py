@@ -42,6 +42,7 @@ class CitaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cita
         fields = [
+            'id',
             'usuario_fk', 
             'fecha_agendamiento', 
             'hora_agendamiento', 
@@ -52,7 +53,7 @@ class CitaSerializer(serializers.ModelSerializer):
         # Seguridad: usuario_fk sigue siendo de solo lectura [6]. 
         # Esto es crucial ya que CitaViewSet asigna el usuario automáticamente
         # en perform_create para prevenir el Control de Acceso Roto [7, 8].
-        read_only_fields = ['usuario_fk']
+        read_only_fields = ['id', 'usuario_fk']
         
         validators = [
             UniqueTogetherValidator(
