@@ -27,5 +27,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Ejecutar pruebas automatizadas
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+          PAYPAL_SECRET: ${{ secrets.PAYPAL_SECRET }}
+          PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
         run: |
           pytest
