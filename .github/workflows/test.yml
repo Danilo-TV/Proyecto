@@ -28,10 +28,10 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
-          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> .env
-          echo "PAYPAL_SECRET=${{ secrets.PAYPAL_SECRET }}" >> .env
-          echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> .env
+          echo "SECRET_KEY=dummy_secret_key_for_testing" >> .env
+          echo "PAYPAL_CLIENT_ID=dummy_paypal_client_id" >> .env
+          echo "PAYPAL_SECRET=dummy_paypal_secret" >> .env
+          echo "PAYPAL_MODE=sandbox" >> .env
 
       - name: Ejecutar pruebas automatizadas
         run: |
